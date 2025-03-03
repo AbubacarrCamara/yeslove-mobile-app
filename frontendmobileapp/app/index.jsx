@@ -23,18 +23,14 @@ const handleUsernameChange = (input) => {
 }
 
 const testLogin = (username, password) => {
-  realmName = "YesLove_Auth";
-
-  ApiApiFactory({}, "http://localhost:5000").postLogin({password: password, username: username})
+  axios.defaults.baseURL = "http://localhost:5000";
+  ApiApiFactory().postLogin({password: password, username: username})
   .then((response) => {
-    //TODO store access and refresh token in redux store
+    axios.defaults.headers.common['Authorization'] = response.data.access_token ?? "";
     router.replace("/(tabs)/home");  
   }).catch((error) => {
     console.error('Login failed:', error);
   });
-
-
-  ApiApiFactory().getUserProfile()
 
 };
 
