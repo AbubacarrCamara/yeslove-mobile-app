@@ -83,6 +83,18 @@
             }
         },
         "/api/email_notifications": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "Get email notification settings",
+                "operationId": "get_email_notifications",
+                "tags": [
+                    "api"
+                ]
+            },
             "post": {
                 "responses": {
                     "200": {
@@ -101,18 +113,6 @@
                         }
                     }
                 ],
-                "tags": [
-                    "api"
-                ]
-            },
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    }
-                },
-                "summary": "Get email notification settings",
-                "operationId": "get_email_notifications",
                 "tags": [
                     "api"
                 ]
@@ -142,13 +142,13 @@
                 ]
             }
         },
-        "/api/follow/{user_id}": {
+        "/api/follow/{keycloak_id}": {
             "parameters": [
                 {
-                    "name": "user_id",
+                    "name": "keycloak_id",
                     "in": "path",
                     "required": true,
-                    "type": "integer"
+                    "type": "string"
                 }
             ],
             "post": {
@@ -174,13 +174,13 @@
                 ]
             }
         },
-        "/api/followers/{user_id}": {
+        "/api/followers/{keycloak_id}": {
             "parameters": [
                 {
-                    "name": "user_id",
+                    "name": "keycloak_id",
                     "in": "path",
                     "required": true,
-                    "type": "integer"
+                    "type": "string"
                 }
             ],
             "get": {
@@ -206,13 +206,13 @@
                 ]
             }
         },
-        "/api/following/{user_id}": {
+        "/api/following/{keycloak_id}": {
             "parameters": [
                 {
-                    "name": "user_id",
+                    "name": "keycloak_id",
                     "in": "path",
                     "required": true,
-                    "type": "integer"
+                    "type": "string"
                 }
             ],
             "get": {
@@ -276,7 +276,7 @@
                     "200": {
                         "description": "Success",
                         "schema": {
-                            "$ref": "#/definitions/LoginResponse"
+                            "$ref": "#/definitions/TokenResponse"
                         }
                     }
                 },
@@ -500,6 +500,18 @@
             }
         },
         "/api/profile_visibility": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "Get profile visibility settings",
+                "operationId": "get_profile_visibility",
+                "tags": [
+                    "api"
+                ]
+            },
             "post": {
                 "responses": {
                     "200": {
@@ -521,25 +533,16 @@
                 "tags": [
                     "api"
                 ]
-            },
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    }
-                },
-                "summary": "Get profile visibility settings",
-                "operationId": "get_profile_visibility",
-                "tags": [
-                    "api"
-                ]
             }
         },
         "/api/refresh_token": {
             "post": {
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/TokenResponse"
+                        }
                     }
                 },
                 "summary": "Refresh expired access token using Keycloak refresh token",
@@ -668,6 +671,30 @@
                     "api"
                 ]
             }
+        },
+        "/api/user/keycloak_id": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "Retrieve a user's Keycloak ID by username (required), with optional email or user ID",
+                "operationId": "get_get_user_keycloak_id_flexible",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/UserQuery"
+                        }
+                    }
+                ],
+                "tags": [
+                    "api"
+                ]
+            }
         }
     },
     "info": {
@@ -704,7 +731,7 @@
             },
             "type": "object"
         },
-        "LoginResponse": {
+        "TokenResponse": {
             "properties": {
                 "access_token": {
                     "type": "string",
@@ -773,6 +800,25 @@
                 "refresh_token": {
                     "type": "string",
                     "description": "Valid refresh token"
+                }
+            },
+            "type": "object"
+        },
+        "UserQuery": {
+            "required": [
+                "username"
+            ],
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "User's email (Optional)"
+                },
+                "user_id": {
+                    "type": "integer",
+                    "description": "User's database ID (Optional)"
                 }
             },
             "type": "object"

@@ -38,7 +38,7 @@ class Signup(Resource):
 @main_api.route("/login")
 class Login(Resource):
     @main_api.expect(models["login"])  # ✅ Attach the correct model
-    @main_api.response(200, "Success", models["login_response"])  # ✅ Ensure correct model
+    @main_api.response(200, "Success", models["token_response"])  # ✅ Ensure correct model
     def post(self):
         """Exchange user credentials for a Keycloak access token and check user type."""
         from app.utils import verify_jwt  # ✅ Avoid circular imports
@@ -188,6 +188,7 @@ class Logout(Resource):
 @main_api.route("/refresh_token")
 class RefreshToken(Resource):
     @main_api.expect(models["refresh_token"])  # ✅ Attach model
+    @main_api.response(200, "Success", models["token_response"])  # ✅ Ensure correct model
     def post(self):
         """Refresh expired access token using Keycloak refresh token."""
         data = request.json

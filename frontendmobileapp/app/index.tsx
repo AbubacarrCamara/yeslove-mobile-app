@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from "expo-router";
 import axios from 'axios';
 import {ApiApiFactory, ApiApi} from "../generated-api/api";
+import { TOKEN_REFRESH_SERVICE } from '@/ts/token-refresh-service';
 
 
 const Login = () => {
@@ -14,19 +15,20 @@ const handleLogin = () => {
   testLogin(username, password)
 }
 
-const handlePasswordChange = (input) => {
+const handlePasswordChange = (input: React.SetStateAction<string>) => {
   setPassword(input)
 }
 
-const handleUsernameChange = (input) => {
+const handleUsernameChange = (input: React.SetStateAction<string>) => {
   setUsername(input)
 }
 
-const testLogin = (username, password) => {
+const testLogin = (username: string, password: string) => {
   axios.defaults.baseURL = "http://localhost:5000";
   ApiApiFactory().postLogin({password: password, username: username})
   .then((response) => {
     axios.defaults.headers.common['Authorization'] = response.data.access_token ?? "";
+    TOKEN_REFRESH_SERVICE.startRefreshingToken(response.data.refresh_token ?? "");
     router.replace("/(tabs)/home");  
   }).catch((error) => {
     console.error('Login failed:', error);

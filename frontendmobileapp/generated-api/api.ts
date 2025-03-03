@@ -242,61 +242,6 @@ export interface LoginRequest {
 /**
  * 
  * @export
- * @interface LoginResponse
- */
-export interface LoginResponse {
-    /**
-     * JWT access token
-     * @type {string}
-     * @memberof LoginResponse
-     */
-    'access_token'?: string;
-    /**
-     * Access token expiration time in seconds
-     * @type {number}
-     * @memberof LoginResponse
-     */
-    'expires_in'?: number;
-    /**
-     * Refresh token expiration time in seconds
-     * @type {number}
-     * @memberof LoginResponse
-     */
-    'refresh_expires_in'?: number;
-    /**
-     * JWT refresh token
-     * @type {string}
-     * @memberof LoginResponse
-     */
-    'refresh_token'?: string;
-    /**
-     * Type of token, typically \'Bearer\'
-     * @type {string}
-     * @memberof LoginResponse
-     */
-    'token_type'?: string;
-    /**
-     * Time before which the token is not valid
-     * @type {number}
-     * @memberof LoginResponse
-     */
-    'not-before-policy'?: number;
-    /**
-     * Session identifier
-     * @type {string}
-     * @memberof LoginResponse
-     */
-    'session_state'?: string;
-    /**
-     * Scopes associated with the token
-     * @type {string}
-     * @memberof LoginResponse
-     */
-    'scope'?: string;
-}
-/**
- * 
- * @export
  * @interface PostSummary
  */
 export interface PostSummary {
@@ -473,6 +418,61 @@ export interface SetUserTypeRequest {
 /**
  * 
  * @export
+ * @interface TokenResponse
+ */
+export interface TokenResponse {
+    /**
+     * JWT access token
+     * @type {string}
+     * @memberof TokenResponse
+     */
+    'access_token'?: string;
+    /**
+     * Access token expiration time in seconds
+     * @type {number}
+     * @memberof TokenResponse
+     */
+    'expires_in'?: number;
+    /**
+     * Refresh token expiration time in seconds
+     * @type {number}
+     * @memberof TokenResponse
+     */
+    'refresh_expires_in'?: number;
+    /**
+     * JWT refresh token
+     * @type {string}
+     * @memberof TokenResponse
+     */
+    'refresh_token'?: string;
+    /**
+     * Type of token, typically \'Bearer\'
+     * @type {string}
+     * @memberof TokenResponse
+     */
+    'token_type'?: string;
+    /**
+     * Time before which the token is not valid
+     * @type {number}
+     * @memberof TokenResponse
+     */
+    'not-before-policy'?: number;
+    /**
+     * Session identifier
+     * @type {string}
+     * @memberof TokenResponse
+     */
+    'session_state'?: string;
+    /**
+     * Scopes associated with the token
+     * @type {string}
+     * @memberof TokenResponse
+     */
+    'scope'?: string;
+}
+/**
+ * 
+ * @export
  * @interface UpdateProfileRequest
  */
 export interface UpdateProfileRequest {
@@ -488,6 +488,31 @@ export interface UpdateProfileRequest {
      * @memberof UpdateProfileRequest
      */
     'profile_pic'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UserQuery
+ */
+export interface UserQuery {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserQuery
+     */
+    'username': string;
+    /**
+     * User\'s email (Optional)
+     * @type {string}
+     * @memberof UserQuery
+     */
+    'email'?: string;
+    /**
+     * User\'s database ID (Optional)
+     * @type {number}
+     * @memberof UserQuery
+     */
+    'user_id'?: number;
 }
 
 /**
@@ -681,18 +706,18 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Fetch all followers of a user
-         * @param {number} userId 
+         * @param {string} keycloakId 
          * @param {object} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGetFollowers: async (userId: number, payload: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('getGetFollowers', 'userId', userId)
+        getGetFollowers: async (keycloakId: string, payload: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'keycloakId' is not null or undefined
+            assertParamExists('getGetFollowers', 'keycloakId', keycloakId)
             // verify required parameter 'payload' is not null or undefined
             assertParamExists('getGetFollowers', 'payload', payload)
-            const localVarPath = `/api/followers/{user_id}`
-                .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            const localVarPath = `/api/followers/{keycloak_id}`
+                .replace(`{${"keycloak_id"}}`, encodeURIComponent(String(keycloakId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -721,18 +746,18 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Fetch all users the current user is following
-         * @param {number} userId 
+         * @param {string} keycloakId 
          * @param {object} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGetFollowing: async (userId: number, payload: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('getGetFollowing', 'userId', userId)
+        getGetFollowing: async (keycloakId: string, payload: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'keycloakId' is not null or undefined
+            assertParamExists('getGetFollowing', 'keycloakId', keycloakId)
             // verify required parameter 'payload' is not null or undefined
             assertParamExists('getGetFollowing', 'payload', payload)
-            const localVarPath = `/api/following/{user_id}`
-                .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            const localVarPath = `/api/following/{keycloak_id}`
+                .replace(`{${"keycloak_id"}}`, encodeURIComponent(String(keycloakId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -773,6 +798,42 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
             assertParamExists('getGetMessages', 'payload', payload)
             const localVarPath = `/api/get_messages/{receiver_id}`
                 .replace(`{${"receiver_id"}}`, encodeURIComponent(String(receiverId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Retrieve a user\'s Keycloak ID by username (required), with optional email or user ID
+         * @param {UserQuery} payload 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGetUserKeycloakIdFlexible: async (payload: UserQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('getGetUserKeycloakIdFlexible', 'payload', payload)
+            const localVarPath = `/api/user/keycloak_id`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1013,18 +1074,18 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Follow or unfollow a user
-         * @param {number} userId 
+         * @param {string} keycloakId 
          * @param {FollowUserRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFollowUser: async (userId: number, payload: FollowUserRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'userId' is not null or undefined
-            assertParamExists('postFollowUser', 'userId', userId)
+        postFollowUser: async (keycloakId: string, payload: FollowUserRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'keycloakId' is not null or undefined
+            assertParamExists('postFollowUser', 'keycloakId', keycloakId)
             // verify required parameter 'payload' is not null or undefined
             assertParamExists('postFollowUser', 'payload', payload)
-            const localVarPath = `/api/follow/{user_id}`
-                .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
+            const localVarPath = `/api/follow/{keycloak_id}`
+                .replace(`{${"keycloak_id"}}`, encodeURIComponent(String(keycloakId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1527,13 +1588,13 @@ export const ApiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Fetch all followers of a user
-         * @param {number} userId 
+         * @param {string} keycloakId 
          * @param {object} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGetFollowers(userId: number, payload: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGetFollowers(userId, payload, options);
+        async getGetFollowers(keycloakId: string, payload: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGetFollowers(keycloakId, payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.getGetFollowers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1541,13 +1602,13 @@ export const ApiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Fetch all users the current user is following
-         * @param {number} userId 
+         * @param {string} keycloakId 
          * @param {object} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGetFollowing(userId: number, payload: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGetFollowing(userId, payload, options);
+        async getGetFollowing(keycloakId: string, payload: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGetFollowing(keycloakId, payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.getGetFollowing']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1564,6 +1625,19 @@ export const ApiApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGetMessages(receiverId, payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.getGetMessages']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Retrieve a user\'s Keycloak ID by username (required), with optional email or user ID
+         * @param {UserQuery} payload 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getGetUserKeycloakIdFlexible(payload: UserQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGetUserKeycloakIdFlexible(payload, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ApiApi.getGetUserKeycloakIdFlexible']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1647,13 +1721,13 @@ export const ApiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Follow or unfollow a user
-         * @param {number} userId 
+         * @param {string} keycloakId 
          * @param {FollowUserRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postFollowUser(userId: number, payload: FollowUserRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postFollowUser(userId, payload, options);
+        async postFollowUser(keycloakId: string, payload: FollowUserRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFollowUser(keycloakId, payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postFollowUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1679,7 +1753,7 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLogin(payload: LoginRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LoginResponse>> {
+        async postLogin(payload: LoginRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postLogin(payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postLogin']?.[localVarOperationServerIndex]?.url;
@@ -1732,7 +1806,7 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postRefreshToken(payload: RefreshTokenRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postRefreshToken(payload: RefreshTokenRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokenResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postRefreshToken(payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postRefreshToken']?.[localVarOperationServerIndex]?.url;
@@ -1866,24 +1940,24 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * 
          * @summary Fetch all followers of a user
-         * @param {number} userId 
+         * @param {string} keycloakId 
          * @param {object} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGetFollowers(userId: number, payload: object, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getGetFollowers(userId, payload, options).then((request) => request(axios, basePath));
+        getGetFollowers(keycloakId: string, payload: object, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getGetFollowers(keycloakId, payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Fetch all users the current user is following
-         * @param {number} userId 
+         * @param {string} keycloakId 
          * @param {object} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGetFollowing(userId: number, payload: object, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getGetFollowing(userId, payload, options).then((request) => request(axios, basePath));
+        getGetFollowing(keycloakId: string, payload: object, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getGetFollowing(keycloakId, payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1895,6 +1969,16 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
          */
         getGetMessages(receiverId: number, payload: object, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getGetMessages(receiverId, payload, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Retrieve a user\'s Keycloak ID by username (required), with optional email or user ID
+         * @param {UserQuery} payload 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getGetUserKeycloakIdFlexible(payload: UserQuery, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getGetUserKeycloakIdFlexible(payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1959,13 +2043,13 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * 
          * @summary Follow or unfollow a user
-         * @param {number} userId 
+         * @param {string} keycloakId 
          * @param {FollowUserRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFollowUser(userId: number, payload: FollowUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postFollowUser(userId, payload, options).then((request) => request(axios, basePath));
+        postFollowUser(keycloakId: string, payload: FollowUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postFollowUser(keycloakId, payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1985,7 +2069,7 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLogin(payload: LoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<LoginResponse> {
+        postLogin(payload: LoginRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenResponse> {
             return localVarFp.postLogin(payload, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2026,7 +2110,7 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postRefreshToken(payload: RefreshTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        postRefreshToken(payload: RefreshTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<TokenResponse> {
             return localVarFp.postRefreshToken(payload, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2152,27 +2236,27 @@ export class ApiApi extends BaseAPI {
     /**
      * 
      * @summary Fetch all followers of a user
-     * @param {number} userId 
+     * @param {string} keycloakId 
      * @param {object} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public getGetFollowers(userId: number, payload: object, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).getGetFollowers(userId, payload, options).then((request) => request(this.axios, this.basePath));
+    public getGetFollowers(keycloakId: string, payload: object, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).getGetFollowers(keycloakId, payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Fetch all users the current user is following
-     * @param {number} userId 
+     * @param {string} keycloakId 
      * @param {object} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public getGetFollowing(userId: number, payload: object, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).getGetFollowing(userId, payload, options).then((request) => request(this.axios, this.basePath));
+    public getGetFollowing(keycloakId: string, payload: object, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).getGetFollowing(keycloakId, payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2186,6 +2270,18 @@ export class ApiApi extends BaseAPI {
      */
     public getGetMessages(receiverId: number, payload: object, options?: RawAxiosRequestConfig) {
         return ApiApiFp(this.configuration).getGetMessages(receiverId, payload, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Retrieve a user\'s Keycloak ID by username (required), with optional email or user ID
+     * @param {UserQuery} payload 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApiApi
+     */
+    public getGetUserKeycloakIdFlexible(payload: UserQuery, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).getGetUserKeycloakIdFlexible(payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2263,14 +2359,14 @@ export class ApiApi extends BaseAPI {
     /**
      * 
      * @summary Follow or unfollow a user
-     * @param {number} userId 
+     * @param {string} keycloakId 
      * @param {FollowUserRequest} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public postFollowUser(userId: number, payload: FollowUserRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).postFollowUser(userId, payload, options).then((request) => request(this.axios, this.basePath));
+    public postFollowUser(keycloakId: string, payload: FollowUserRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).postFollowUser(keycloakId, payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -59,7 +59,7 @@ def register_models(api):
         "password": fields.String(required=True, description="User's Keycloak password"),
     })
 
-    models["login_response"] = api.model("LoginResponse", {
+    models["token_response"] = api.model("TokenResponse", {
         "access_token": fields.String(description="JWT access token"),
         "expires_in": fields.Integer(description="Access token expiration time in seconds"),
         "refresh_expires_in": fields.Integer(description="Refresh token expiration time in seconds"),
