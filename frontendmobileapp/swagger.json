@@ -21,12 +21,12 @@
                 "operationId": "get_about_user",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/AboutResponse"
+                        }
                     }
                 ],
                 "tags": [
@@ -45,12 +45,12 @@
                 "operationId": "post_change_password",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ChangePasswordRequest"
+                        }
                     }
                 ],
                 "tags": [
@@ -69,12 +69,12 @@
                 "operationId": "delete_delete_account",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/DeleteAccountRequest"
+                        }
                     }
                 ],
                 "tags": [
@@ -93,12 +93,12 @@
                 "operationId": "post_email_notifications",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/EmailNotificationSettings"
+                        }
                     }
                 ],
                 "tags": [
@@ -129,12 +129,12 @@
                 "operationId": "get_feed",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/FeedQuery"
+                        }
                     }
                 ],
                 "tags": [
@@ -161,12 +161,12 @@
                 "operationId": "post_follow_user",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/FollowUserRequest"
+                        }
                     }
                 ],
                 "tags": [
@@ -257,12 +257,12 @@
                 "operationId": "get_get_messages",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/GetMessagesRequest"
+                        }
                     }
                 ],
                 "tags": [
@@ -332,14 +332,6 @@
                 "operationId": "post_create_post",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
-                        "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
-                    },
-                    {
                         "name": "payload",
                         "required": true,
                         "in": "body",
@@ -372,12 +364,12 @@
                 "operationId": "post_add_comment",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/AddCommentRequest"
+                        }
                     }
                 ],
                 "tags": [
@@ -436,12 +428,12 @@
                 "operationId": "post_like_post",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/LikePostRequest"
+                        }
                     }
                 ],
                 "tags": [
@@ -469,12 +461,12 @@
                 "operationId": "post_react_to_post",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ReactionRequest"
+                        }
                     }
                 ],
                 "tags": [
@@ -502,16 +494,6 @@
                 },
                 "summary": "Get user profile and posts",
                 "operationId": "get_user_profile",
-                "parameters": [
-                    {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
-                        "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
-                    }
-                ],
                 "tags": [
                     "api"
                 ]
@@ -528,12 +510,12 @@
                 "operationId": "post_profile_visibility",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/ProfileVisibilitySettings"
+                        }
                     }
                 ],
                 "tags": [
@@ -612,12 +594,12 @@
                 "operationId": "post_send_message",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/SendMessageRequest"
+                        }
                     }
                 ],
                 "tags": [
@@ -636,12 +618,12 @@
                 "operationId": "post_set_user_type",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/SetUserTypeRequest"
+                        }
                     }
                 ],
                 "tags": [
@@ -674,12 +656,12 @@
                 "operationId": "put_update_profile",
                 "parameters": [
                     {
-                        "name": "Authorization",
-                        "in": "header",
-                        "type": "string",
+                        "name": "payload",
                         "required": true,
-                        "description": "Bearer <token>",
-                        "default": "Bearer <your-access-token>"
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/UpdateProfileRequest"
+                        }
                     }
                 ],
                 "tags": [
@@ -755,6 +737,26 @@
                 "scope": {
                     "type": "string",
                     "description": "Scopes associated with the token"
+                }
+            },
+            "type": "object"
+        },
+        "SetUserTypeRequest": {
+            "required": [
+                "user_type"
+            ],
+            "properties": {
+                "user_type": {
+                    "type": "string",
+                    "description": "Choose 'professional' or 'standard'"
+                },
+                "license": {
+                    "type": "string",
+                    "description": "License number (for professional users only)"
+                },
+                "specialization": {
+                    "type": "string",
+                    "description": "Specialization field (for professional users only)"
                 }
             },
             "type": "object"
@@ -867,6 +869,42 @@
             },
             "type": "object"
         },
+        "UpdateProfileRequest": {
+            "properties": {
+                "bio": {
+                    "type": "string",
+                    "description": "User's bio"
+                },
+                "profile_pic": {
+                    "type": "string",
+                    "description": "Profile picture URL"
+                }
+            },
+            "type": "object"
+        },
+        "AboutResponse": {
+            "properties": {
+                "contact": {
+                    "$ref": "#/definitions/ContactInfo"
+                },
+                "education_and_employment": {
+                    "$ref": "#/definitions/EducationInfo"
+                }
+            },
+            "type": "object"
+        },
+        "ChangePasswordRequest": {
+            "required": [
+                "new_password"
+            ],
+            "properties": {
+                "new_password": {
+                    "type": "string",
+                    "description": "New password for the user"
+                }
+            },
+            "type": "object"
+        },
         "ResetPasswordRequest": {
             "required": [
                 "email"
@@ -875,6 +913,66 @@
                 "email": {
                     "type": "string",
                     "description": "User's email for password reset"
+                }
+            },
+            "type": "object"
+        },
+        "EmailNotificationSettings": {
+            "required": [
+                "setting_id",
+                "value"
+            ],
+            "properties": {
+                "setting_id": {
+                    "type": "string",
+                    "description": "Unique ID for the setting"
+                },
+                "value": {
+                    "type": "boolean",
+                    "description": "Notification enabled (true/false)"
+                }
+            },
+            "type": "object"
+        },
+        "ProfileVisibilitySettings": {
+            "required": [
+                "category",
+                "setting_id",
+                "value"
+            ],
+            "properties": {
+                "setting_id": {
+                    "type": "string",
+                    "description": "Unique ID for the setting"
+                },
+                "value": {
+                    "type": "string",
+                    "description": "Visibility value (visible/hidden)"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "Category: 'Contact' or 'Education And Other Information'"
+                }
+            },
+            "type": "object"
+        },
+        "DeleteAccountRequest": {
+            "required": [
+                "confirmation"
+            ],
+            "properties": {
+                "confirmation": {
+                    "type": "boolean",
+                    "description": "Confirmation required to delete the account"
+                }
+            },
+            "type": "object"
+        },
+        "FeedQuery": {
+            "properties": {
+                "feed_type": {
+                    "type": "string",
+                    "description": "Type of feed: 'all', 'mentions', 'favorites', 'friends', 'groups'"
                 }
             },
             "type": "object"
@@ -891,16 +989,81 @@
             },
             "type": "object"
         },
-        "GetMessagesRequest": {
-            "properties": {},
+        "ReactionRequest": {
+            "required": [
+                "reaction_type"
+            ],
+            "properties": {
+                "reaction_type": {
+                    "type": "string",
+                    "description": "Reaction type: 'like', 'love', 'laugh', 'angry', etc."
+                }
+            },
             "type": "object"
         },
         "GetFollowersRequest": {
             "properties": {},
             "type": "object"
         },
+        "LikePostRequest": {
+            "required": [
+                "post_id"
+            ],
+            "properties": {
+                "post_id": {
+                    "type": "integer",
+                    "description": "ID of the post to like or unlike"
+                }
+            },
+            "type": "object"
+        },
+        "AddCommentRequest": {
+            "required": [
+                "content"
+            ],
+            "properties": {
+                "content": {
+                    "type": "string",
+                    "description": "Content of the comment"
+                }
+            },
+            "type": "object"
+        },
+        "GetMessagesRequest": {
+            "properties": {},
+            "type": "object"
+        },
+        "FollowUserRequest": {
+            "required": [
+                "action"
+            ],
+            "properties": {
+                "action": {
+                    "type": "string",
+                    "description": "'follow' to follow, 'unfollow' to unfollow"
+                }
+            },
+            "type": "object"
+        },
         "GetFollowingRequest": {
             "properties": {},
+            "type": "object"
+        },
+        "SendMessageRequest": {
+            "required": [
+                "message",
+                "receiver_id"
+            ],
+            "properties": {
+                "receiver_id": {
+                    "type": "integer",
+                    "description": "ID of the recipient user"
+                },
+                "message": {
+                    "type": "string",
+                    "description": "Message content"
+                }
+            },
             "type": "object"
         }
     },

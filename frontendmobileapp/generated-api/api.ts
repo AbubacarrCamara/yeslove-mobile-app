@@ -26,6 +26,51 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
 /**
  * 
  * @export
+ * @interface AboutResponse
+ */
+export interface AboutResponse {
+    /**
+     * 
+     * @type {ContactInfo}
+     * @memberof AboutResponse
+     */
+    'contact'?: ContactInfo;
+    /**
+     * 
+     * @type {EducationInfo}
+     * @memberof AboutResponse
+     */
+    'education_and_employment'?: EducationInfo;
+}
+/**
+ * 
+ * @export
+ * @interface AddCommentRequest
+ */
+export interface AddCommentRequest {
+    /**
+     * Content of the comment
+     * @type {string}
+     * @memberof AddCommentRequest
+     */
+    'content': string;
+}
+/**
+ * 
+ * @export
+ * @interface ChangePasswordRequest
+ */
+export interface ChangePasswordRequest {
+    /**
+     * New password for the user
+     * @type {string}
+     * @memberof ChangePasswordRequest
+     */
+    'new_password': string;
+}
+/**
+ * 
+ * @export
  * @interface ContactInfo
  */
 export interface ContactInfo {
@@ -76,6 +121,19 @@ export interface CreatePostRequest {
 /**
  * 
  * @export
+ * @interface DeleteAccountRequest
+ */
+export interface DeleteAccountRequest {
+    /**
+     * Confirmation required to delete the account
+     * @type {boolean}
+     * @memberof DeleteAccountRequest
+     */
+    'confirmation': boolean;
+}
+/**
+ * 
+ * @export
  * @interface EducationInfo
  */
 export interface EducationInfo {
@@ -103,6 +161,64 @@ export interface EducationInfo {
      * @memberof EducationInfo
      */
     'employment'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface EmailNotificationSettings
+ */
+export interface EmailNotificationSettings {
+    /**
+     * Unique ID for the setting
+     * @type {string}
+     * @memberof EmailNotificationSettings
+     */
+    'setting_id': string;
+    /**
+     * Notification enabled (true/false)
+     * @type {boolean}
+     * @memberof EmailNotificationSettings
+     */
+    'value': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface FeedQuery
+ */
+export interface FeedQuery {
+    /**
+     * Type of feed: \'all\', \'mentions\', \'favorites\', \'friends\', \'groups\'
+     * @type {string}
+     * @memberof FeedQuery
+     */
+    'feed_type'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface FollowUserRequest
+ */
+export interface FollowUserRequest {
+    /**
+     * \'follow\' to follow, \'unfollow\' to unfollow
+     * @type {string}
+     * @memberof FollowUserRequest
+     */
+    'action': string;
+}
+/**
+ * 
+ * @export
+ * @interface LikePostRequest
+ */
+export interface LikePostRequest {
+    /**
+     * ID of the post to like or unlike
+     * @type {number}
+     * @memberof LikePostRequest
+     */
+    'post_id': number;
 }
 /**
  * 
@@ -249,6 +365,44 @@ export interface ProfileResponse {
 /**
  * 
  * @export
+ * @interface ProfileVisibilitySettings
+ */
+export interface ProfileVisibilitySettings {
+    /**
+     * Unique ID for the setting
+     * @type {string}
+     * @memberof ProfileVisibilitySettings
+     */
+    'setting_id': string;
+    /**
+     * Visibility value (visible/hidden)
+     * @type {string}
+     * @memberof ProfileVisibilitySettings
+     */
+    'value': string;
+    /**
+     * Category: \'Contact\' or \'Education And Other Information\'
+     * @type {string}
+     * @memberof ProfileVisibilitySettings
+     */
+    'category': string;
+}
+/**
+ * 
+ * @export
+ * @interface ReactionRequest
+ */
+export interface ReactionRequest {
+    /**
+     * Reaction type: \'like\', \'love\', \'laugh\', \'angry\', etc.
+     * @type {string}
+     * @memberof ReactionRequest
+     */
+    'reaction_type': string;
+}
+/**
+ * 
+ * @export
  * @interface RefreshTokenRequest
  */
 export interface RefreshTokenRequest {
@@ -272,6 +426,69 @@ export interface ResetPasswordRequest {
      */
     'email': string;
 }
+/**
+ * 
+ * @export
+ * @interface SendMessageRequest
+ */
+export interface SendMessageRequest {
+    /**
+     * ID of the recipient user
+     * @type {number}
+     * @memberof SendMessageRequest
+     */
+    'receiver_id': number;
+    /**
+     * Message content
+     * @type {string}
+     * @memberof SendMessageRequest
+     */
+    'message': string;
+}
+/**
+ * 
+ * @export
+ * @interface SetUserTypeRequest
+ */
+export interface SetUserTypeRequest {
+    /**
+     * Choose \'professional\' or \'standard\'
+     * @type {string}
+     * @memberof SetUserTypeRequest
+     */
+    'user_type': string;
+    /**
+     * License number (for professional users only)
+     * @type {string}
+     * @memberof SetUserTypeRequest
+     */
+    'license'?: string;
+    /**
+     * Specialization field (for professional users only)
+     * @type {string}
+     * @memberof SetUserTypeRequest
+     */
+    'specialization'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateProfileRequest
+ */
+export interface UpdateProfileRequest {
+    /**
+     * User\'s bio
+     * @type {string}
+     * @memberof UpdateProfileRequest
+     */
+    'bio'?: string;
+    /**
+     * Profile picture URL
+     * @type {string}
+     * @memberof UpdateProfileRequest
+     */
+    'profile_pic'?: string;
+}
 
 /**
  * ApiApi - axios parameter creator
@@ -282,13 +499,13 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Delete user account via Keycloak API
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {DeleteAccountRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteDeleteAccount: async (authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('deleteDeleteAccount', 'authorization', authorization)
+        deleteDeleteAccount: async (payload: DeleteAccountRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('deleteDeleteAccount', 'payload', payload)
             const localVarPath = `/api/delete_account`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -303,12 +520,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -319,15 +536,15 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * 
          * @summary Get user contact & education details for About section
          * @param {string} keycloakId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {AboutResponse} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAboutUser: async (keycloakId: string, authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAboutUser: async (keycloakId: string, payload: AboutResponse, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'keycloakId' is not null or undefined
             assertParamExists('getAboutUser', 'keycloakId', keycloakId)
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('getAboutUser', 'authorization', authorization)
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('getAboutUser', 'payload', payload)
             const localVarPath = `/api/about/{keycloak_id}`
                 .replace(`{${"keycloak_id"}}`, encodeURIComponent(String(keycloakId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -343,12 +560,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -388,13 +605,13 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Fetch posts based on selected feed type (All Updates, Mentions, Favorites, Friends, Groups)
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {FeedQuery} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFeed: async (authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('getFeed', 'authorization', authorization)
+        getFeed: async (payload: FeedQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('getFeed', 'payload', payload)
             const localVarPath = `/api/feed`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -409,12 +626,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -545,15 +762,15 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * 
          * @summary Fetch chat messages between two users
          * @param {number} receiverId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {object} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGetMessages: async (receiverId: number, authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getGetMessages: async (receiverId: number, payload: object, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'receiverId' is not null or undefined
             assertParamExists('getGetMessages', 'receiverId', receiverId)
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('getGetMessages', 'authorization', authorization)
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('getGetMessages', 'payload', payload)
             const localVarPath = `/api/get_messages/{receiver_id}`
                 .replace(`{${"receiver_id"}}`, encodeURIComponent(String(receiverId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -569,12 +786,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -615,15 +832,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * 
          * @summary Get user profile and posts
          * @param {string} keycloakId 
-         * @param {string} authorization Bearer &lt;token&gt;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserProfile: async (keycloakId: string, authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUserProfile: async (keycloakId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'keycloakId' is not null or undefined
             assertParamExists('getUserProfile', 'keycloakId', keycloakId)
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('getUserProfile', 'authorization', authorization)
             const localVarPath = `/api/profile/{keycloak_id}`
                 .replace(`{${"keycloak_id"}}`, encodeURIComponent(String(keycloakId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -639,9 +853,6 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -655,15 +866,15 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * 
          * @summary Add a comment to a post
          * @param {number} postId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {AddCommentRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAddComment: async (postId: number, authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAddComment: async (postId: number, payload: AddCommentRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'postId' is not null or undefined
             assertParamExists('postAddComment', 'postId', postId)
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('postAddComment', 'authorization', authorization)
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('postAddComment', 'payload', payload)
             const localVarPath = `/api/post/{post_id}/comment`
                 .replace(`{${"post_id"}}`, encodeURIComponent(String(postId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -679,12 +890,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -694,13 +905,13 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Change user password via Keycloak API
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {ChangePasswordRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postChangePassword: async (authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('postChangePassword', 'authorization', authorization)
+        postChangePassword: async (payload: ChangePasswordRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('postChangePassword', 'payload', payload)
             const localVarPath = `/api/change_password`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -715,12 +926,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -730,14 +941,11 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Create a new post
-         * @param {string} authorization Bearer &lt;token&gt;
          * @param {CreatePostRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCreatePost: async (authorization: string, payload: CreatePostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('postCreatePost', 'authorization', authorization)
+        postCreatePost: async (payload: CreatePostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'payload' is not null or undefined
             assertParamExists('postCreatePost', 'payload', payload)
             const localVarPath = `/api/post`;
@@ -756,9 +964,6 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
@@ -772,13 +977,13 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Update email notification settings
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {EmailNotificationSettings} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEmailNotifications: async (authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('postEmailNotifications', 'authorization', authorization)
+        postEmailNotifications: async (payload: EmailNotificationSettings, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('postEmailNotifications', 'payload', payload)
             const localVarPath = `/api/email_notifications`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -793,12 +998,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -809,15 +1014,15 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * 
          * @summary Follow or unfollow a user
          * @param {number} userId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {FollowUserRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFollowUser: async (userId: number, authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postFollowUser: async (userId: number, payload: FollowUserRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('postFollowUser', 'userId', userId)
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('postFollowUser', 'authorization', authorization)
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('postFollowUser', 'payload', payload)
             const localVarPath = `/api/follow/{user_id}`
                 .replace(`{${"user_id"}}`, encodeURIComponent(String(userId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -833,12 +1038,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -849,15 +1054,15 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * 
          * @summary Like or unlike a post
          * @param {number} postId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {LikePostRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLikePost: async (postId: number, authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postLikePost: async (postId: number, payload: LikePostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'postId' is not null or undefined
             assertParamExists('postLikePost', 'postId', postId)
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('postLikePost', 'authorization', authorization)
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('postLikePost', 'payload', payload)
             const localVarPath = `/api/post/{post_id}/like`
                 .replace(`{${"post_id"}}`, encodeURIComponent(String(postId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -873,12 +1078,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -960,13 +1165,13 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Update profile visibility settings
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {ProfileVisibilitySettings} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProfileVisibility: async (authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('postProfileVisibility', 'authorization', authorization)
+        postProfileVisibility: async (payload: ProfileVisibilitySettings, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('postProfileVisibility', 'payload', payload)
             const localVarPath = `/api/profile_visibility`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -981,12 +1186,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -997,15 +1202,15 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
          * ).
          * @summary Add or update a reaction to a post (like, love, laugh, etc
          * @param {number} postId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {ReactionRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postReactToPost: async (postId: number, authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postReactToPost: async (postId: number, payload: ReactionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'postId' is not null or undefined
             assertParamExists('postReactToPost', 'postId', postId)
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('postReactToPost', 'authorization', authorization)
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('postReactToPost', 'payload', payload)
             const localVarPath = `/api/post/{post_id}/reaction`
                 .replace(`{${"post_id"}}`, encodeURIComponent(String(postId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1021,12 +1226,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1108,13 +1313,13 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Send a private message
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {SendMessageRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSendMessage: async (authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('postSendMessage', 'authorization', authorization)
+        postSendMessage: async (payload: SendMessageRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('postSendMessage', 'payload', payload)
             const localVarPath = `/api/send_message`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1129,12 +1334,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1144,13 +1349,13 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Set user type (professional or standard) for new users
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {SetUserTypeRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSetUserType: async (authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('postSetUserType', 'authorization', authorization)
+        postSetUserType: async (payload: SetUserTypeRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('postSetUserType', 'payload', payload)
             const localVarPath = `/api/set_user_type`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1165,12 +1370,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1210,13 +1415,13 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         /**
          * 
          * @summary Update user profile
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {UpdateProfileRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putUpdateProfile: async (authorization: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('putUpdateProfile', 'authorization', authorization)
+        putUpdateProfile: async (payload: UpdateProfileRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('putUpdateProfile', 'payload', payload)
             const localVarPath = `/api/update_profile`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1231,12 +1436,12 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
 
 
     
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1256,12 +1461,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Delete user account via Keycloak API
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {DeleteAccountRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteDeleteAccount(authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDeleteAccount(authorization, options);
+        async deleteDeleteAccount(payload: DeleteAccountRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDeleteAccount(payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.deleteDeleteAccount']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1270,12 +1475,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get user contact & education details for About section
          * @param {string} keycloakId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {AboutResponse} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAboutUser(keycloakId: string, authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAboutUser(keycloakId, authorization, options);
+        async getAboutUser(keycloakId: string, payload: AboutResponse, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAboutUser(keycloakId, payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.getAboutUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1295,12 +1500,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Fetch posts based on selected feed type (All Updates, Mentions, Favorites, Friends, Groups)
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {FeedQuery} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFeed(authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getFeed(authorization, options);
+        async getFeed(payload: FeedQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getFeed(payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.getFeed']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1351,12 +1556,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * 
          * @summary Fetch chat messages between two users
          * @param {number} receiverId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {object} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGetMessages(receiverId: number, authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGetMessages(receiverId, authorization, options);
+        async getGetMessages(receiverId: number, payload: object, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getGetMessages(receiverId, payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.getGetMessages']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1377,12 +1582,11 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * 
          * @summary Get user profile and posts
          * @param {string} keycloakId 
-         * @param {string} authorization Bearer &lt;token&gt;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUserProfile(keycloakId: string, authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProfileResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserProfile(keycloakId, authorization, options);
+        async getUserProfile(keycloakId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProfileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getUserProfile(keycloakId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.getUserProfile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1391,12 +1595,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * 
          * @summary Add a comment to a post
          * @param {number} postId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {AddCommentRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAddComment(postId: number, authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postAddComment(postId, authorization, options);
+        async postAddComment(postId: number, payload: AddCommentRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAddComment(postId, payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postAddComment']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1404,12 +1608,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Change user password via Keycloak API
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {ChangePasswordRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postChangePassword(authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postChangePassword(authorization, options);
+        async postChangePassword(payload: ChangePasswordRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postChangePassword(payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postChangePassword']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1417,13 +1621,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Create a new post
-         * @param {string} authorization Bearer &lt;token&gt;
          * @param {CreatePostRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postCreatePost(authorization: string, payload: CreatePostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postCreatePost(authorization, payload, options);
+        async postCreatePost(payload: CreatePostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postCreatePost(payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postCreatePost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1431,12 +1634,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Update email notification settings
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {EmailNotificationSettings} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postEmailNotifications(authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postEmailNotifications(authorization, options);
+        async postEmailNotifications(payload: EmailNotificationSettings, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postEmailNotifications(payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postEmailNotifications']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1445,12 +1648,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * 
          * @summary Follow or unfollow a user
          * @param {number} userId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {FollowUserRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postFollowUser(userId: number, authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postFollowUser(userId, authorization, options);
+        async postFollowUser(userId: number, payload: FollowUserRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postFollowUser(userId, payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postFollowUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1459,12 +1662,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * 
          * @summary Like or unlike a post
          * @param {number} postId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {LikePostRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postLikePost(postId: number, authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postLikePost(postId, authorization, options);
+        async postLikePost(postId: number, payload: LikePostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postLikePost(postId, payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postLikePost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1498,12 +1701,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Update profile visibility settings
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {ProfileVisibilitySettings} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postProfileVisibility(authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postProfileVisibility(authorization, options);
+        async postProfileVisibility(payload: ProfileVisibilitySettings, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postProfileVisibility(payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postProfileVisibility']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1512,12 +1715,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
          * ).
          * @summary Add or update a reaction to a post (like, love, laugh, etc
          * @param {number} postId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {ReactionRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postReactToPost(postId: number, authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postReactToPost(postId, authorization, options);
+        async postReactToPost(postId: number, payload: ReactionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postReactToPost(postId, payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postReactToPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1551,12 +1754,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Send a private message
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {SendMessageRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSendMessage(authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSendMessage(authorization, options);
+        async postSendMessage(payload: SendMessageRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSendMessage(payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postSendMessage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1564,12 +1767,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Set user type (professional or standard) for new users
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {SetUserTypeRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postSetUserType(authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postSetUserType(authorization, options);
+        async postSetUserType(payload: SetUserTypeRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postSetUserType(payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postSetUserType']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1589,12 +1792,12 @@ export const ApiApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Update user profile
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {UpdateProfileRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putUpdateProfile(authorization: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putUpdateProfile(authorization, options);
+        async putUpdateProfile(payload: UpdateProfileRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putUpdateProfile(payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.putUpdateProfile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -1612,23 +1815,23 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * 
          * @summary Delete user account via Keycloak API
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {DeleteAccountRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteDeleteAccount(authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.deleteDeleteAccount(authorization, options).then((request) => request(axios, basePath));
+        deleteDeleteAccount(payload: DeleteAccountRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.deleteDeleteAccount(payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Get user contact & education details for About section
          * @param {string} keycloakId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {AboutResponse} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAboutUser(keycloakId: string, authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getAboutUser(keycloakId, authorization, options).then((request) => request(axios, basePath));
+        getAboutUser(keycloakId: string, payload: AboutResponse, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getAboutUser(keycloakId, payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1642,12 +1845,12 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * 
          * @summary Fetch posts based on selected feed type (All Updates, Mentions, Favorites, Friends, Groups)
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {FeedQuery} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFeed(authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getFeed(authorization, options).then((request) => request(axios, basePath));
+        getFeed(payload: FeedQuery, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getFeed(payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1686,12 +1889,12 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
          * 
          * @summary Fetch chat messages between two users
          * @param {number} receiverId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {object} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGetMessages(receiverId: number, authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getGetMessages(receiverId, authorization, options).then((request) => request(axios, basePath));
+        getGetMessages(receiverId: number, payload: object, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getGetMessages(receiverId, payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1706,76 +1909,74 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
          * 
          * @summary Get user profile and posts
          * @param {string} keycloakId 
-         * @param {string} authorization Bearer &lt;token&gt;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUserProfile(keycloakId: string, authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<ProfileResponse> {
-            return localVarFp.getUserProfile(keycloakId, authorization, options).then((request) => request(axios, basePath));
+        getUserProfile(keycloakId: string, options?: RawAxiosRequestConfig): AxiosPromise<ProfileResponse> {
+            return localVarFp.getUserProfile(keycloakId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Add a comment to a post
          * @param {number} postId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {AddCommentRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAddComment(postId: number, authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postAddComment(postId, authorization, options).then((request) => request(axios, basePath));
+        postAddComment(postId: number, payload: AddCommentRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postAddComment(postId, payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Change user password via Keycloak API
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {ChangePasswordRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postChangePassword(authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postChangePassword(authorization, options).then((request) => request(axios, basePath));
+        postChangePassword(payload: ChangePasswordRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postChangePassword(payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Create a new post
-         * @param {string} authorization Bearer &lt;token&gt;
          * @param {CreatePostRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postCreatePost(authorization: string, payload: CreatePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postCreatePost(authorization, payload, options).then((request) => request(axios, basePath));
+        postCreatePost(payload: CreatePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postCreatePost(payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Update email notification settings
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {EmailNotificationSettings} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postEmailNotifications(authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postEmailNotifications(authorization, options).then((request) => request(axios, basePath));
+        postEmailNotifications(payload: EmailNotificationSettings, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postEmailNotifications(payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Follow or unfollow a user
          * @param {number} userId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {FollowUserRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postFollowUser(userId: number, authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postFollowUser(userId, authorization, options).then((request) => request(axios, basePath));
+        postFollowUser(userId: number, payload: FollowUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postFollowUser(userId, payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Like or unlike a post
          * @param {number} postId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {LikePostRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postLikePost(postId: number, authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postLikePost(postId, authorization, options).then((request) => request(axios, basePath));
+        postLikePost(postId: number, payload: LikePostRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postLikePost(postId, payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1800,23 +2001,23 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * 
          * @summary Update profile visibility settings
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {ProfileVisibilitySettings} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postProfileVisibility(authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postProfileVisibility(authorization, options).then((request) => request(axios, basePath));
+        postProfileVisibility(payload: ProfileVisibilitySettings, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postProfileVisibility(payload, options).then((request) => request(axios, basePath));
         },
         /**
          * ).
          * @summary Add or update a reaction to a post (like, love, laugh, etc
          * @param {number} postId 
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {ReactionRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postReactToPost(postId: number, authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postReactToPost(postId, authorization, options).then((request) => request(axios, basePath));
+        postReactToPost(postId: number, payload: ReactionRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postReactToPost(postId, payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1841,22 +2042,22 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * 
          * @summary Send a private message
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {SendMessageRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSendMessage(authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postSendMessage(authorization, options).then((request) => request(axios, basePath));
+        postSendMessage(payload: SendMessageRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postSendMessage(payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Set user type (professional or standard) for new users
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {SetUserTypeRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postSetUserType(authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.postSetUserType(authorization, options).then((request) => request(axios, basePath));
+        postSetUserType(payload: SetUserTypeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.postSetUserType(payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1870,12 +2071,12 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
         /**
          * 
          * @summary Update user profile
-         * @param {string} authorization Bearer &lt;token&gt;
+         * @param {UpdateProfileRequest} payload 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putUpdateProfile(authorization: string, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.putUpdateProfile(authorization, options).then((request) => request(axios, basePath));
+        putUpdateProfile(payload: UpdateProfileRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.putUpdateProfile(payload, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1890,26 +2091,26 @@ export class ApiApi extends BaseAPI {
     /**
      * 
      * @summary Delete user account via Keycloak API
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {DeleteAccountRequest} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public deleteDeleteAccount(authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).deleteDeleteAccount(authorization, options).then((request) => request(this.axios, this.basePath));
+    public deleteDeleteAccount(payload: DeleteAccountRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).deleteDeleteAccount(payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Get user contact & education details for About section
      * @param {string} keycloakId 
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {AboutResponse} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public getAboutUser(keycloakId: string, authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).getAboutUser(keycloakId, authorization, options).then((request) => request(this.axios, this.basePath));
+    public getAboutUser(keycloakId: string, payload: AboutResponse, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).getAboutUser(keycloakId, payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1926,13 +2127,13 @@ export class ApiApi extends BaseAPI {
     /**
      * 
      * @summary Fetch posts based on selected feed type (All Updates, Mentions, Favorites, Friends, Groups)
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {FeedQuery} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public getFeed(authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).getFeed(authorization, options).then((request) => request(this.axios, this.basePath));
+    public getFeed(payload: FeedQuery, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).getFeed(payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1978,13 +2179,13 @@ export class ApiApi extends BaseAPI {
      * 
      * @summary Fetch chat messages between two users
      * @param {number} receiverId 
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {object} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public getGetMessages(receiverId: number, authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).getGetMessages(receiverId, authorization, options).then((request) => request(this.axios, this.basePath));
+    public getGetMessages(receiverId: number, payload: object, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).getGetMessages(receiverId, payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2002,89 +2203,87 @@ export class ApiApi extends BaseAPI {
      * 
      * @summary Get user profile and posts
      * @param {string} keycloakId 
-     * @param {string} authorization Bearer &lt;token&gt;
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public getUserProfile(keycloakId: string, authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).getUserProfile(keycloakId, authorization, options).then((request) => request(this.axios, this.basePath));
+    public getUserProfile(keycloakId: string, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).getUserProfile(keycloakId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Add a comment to a post
      * @param {number} postId 
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {AddCommentRequest} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public postAddComment(postId: number, authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).postAddComment(postId, authorization, options).then((request) => request(this.axios, this.basePath));
+    public postAddComment(postId: number, payload: AddCommentRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).postAddComment(postId, payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Change user password via Keycloak API
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {ChangePasswordRequest} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public postChangePassword(authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).postChangePassword(authorization, options).then((request) => request(this.axios, this.basePath));
+    public postChangePassword(payload: ChangePasswordRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).postChangePassword(payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Create a new post
-     * @param {string} authorization Bearer &lt;token&gt;
      * @param {CreatePostRequest} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public postCreatePost(authorization: string, payload: CreatePostRequest, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).postCreatePost(authorization, payload, options).then((request) => request(this.axios, this.basePath));
+    public postCreatePost(payload: CreatePostRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).postCreatePost(payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Update email notification settings
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {EmailNotificationSettings} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public postEmailNotifications(authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).postEmailNotifications(authorization, options).then((request) => request(this.axios, this.basePath));
+    public postEmailNotifications(payload: EmailNotificationSettings, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).postEmailNotifications(payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Follow or unfollow a user
      * @param {number} userId 
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {FollowUserRequest} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public postFollowUser(userId: number, authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).postFollowUser(userId, authorization, options).then((request) => request(this.axios, this.basePath));
+    public postFollowUser(userId: number, payload: FollowUserRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).postFollowUser(userId, payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Like or unlike a post
      * @param {number} postId 
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {LikePostRequest} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public postLikePost(postId: number, authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).postLikePost(postId, authorization, options).then((request) => request(this.axios, this.basePath));
+    public postLikePost(postId: number, payload: LikePostRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).postLikePost(postId, payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2114,26 +2313,26 @@ export class ApiApi extends BaseAPI {
     /**
      * 
      * @summary Update profile visibility settings
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {ProfileVisibilitySettings} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public postProfileVisibility(authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).postProfileVisibility(authorization, options).then((request) => request(this.axios, this.basePath));
+    public postProfileVisibility(payload: ProfileVisibilitySettings, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).postProfileVisibility(payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * ).
      * @summary Add or update a reaction to a post (like, love, laugh, etc
      * @param {number} postId 
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {ReactionRequest} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public postReactToPost(postId: number, authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).postReactToPost(postId, authorization, options).then((request) => request(this.axios, this.basePath));
+    public postReactToPost(postId: number, payload: ReactionRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).postReactToPost(postId, payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2163,25 +2362,25 @@ export class ApiApi extends BaseAPI {
     /**
      * 
      * @summary Send a private message
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {SendMessageRequest} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public postSendMessage(authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).postSendMessage(authorization, options).then((request) => request(this.axios, this.basePath));
+    public postSendMessage(payload: SendMessageRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).postSendMessage(payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Set user type (professional or standard) for new users
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {SetUserTypeRequest} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public postSetUserType(authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).postSetUserType(authorization, options).then((request) => request(this.axios, this.basePath));
+    public postSetUserType(payload: SetUserTypeRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).postSetUserType(payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2198,13 +2397,13 @@ export class ApiApi extends BaseAPI {
     /**
      * 
      * @summary Update user profile
-     * @param {string} authorization Bearer &lt;token&gt;
+     * @param {UpdateProfileRequest} payload 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ApiApi
      */
-    public putUpdateProfile(authorization: string, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).putUpdateProfile(authorization, options).then((request) => request(this.axios, this.basePath));
+    public putUpdateProfile(payload: UpdateProfileRequest, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).putUpdateProfile(payload, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
