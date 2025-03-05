@@ -1,10 +1,16 @@
 import React, { useState } from "react"
-import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
 
 export default function ProfilePage() {
 const [activeTab, setActiveTab] = useState("Timeline");
-const [activeAboutTab, setActiveAboutTab] = useState("View")
+const [activeAboutTab, setActiveAboutTab] = useState("View");
+const [userData, setUserData] = useState("")
 
+const [editedData, setEditedData] = useState({ ...userData });
+
+const handleSave = () => {
+  setUserData(editedData);
+};
 const navBarItems = [
   "Timeline", "About", "Videos",
   "Notifications", "Photos", "Settings",
@@ -94,27 +100,27 @@ const aboutItems = [
         {/* About/View */}
         <View style={styles.viewItemContainer}>
           <Text style={styles.viewItemText}>Name</Text>
-          <Text style={styles.viewItemInfo}>User's name</Text>
+          <Text style={styles.viewItemInfo}>{userData.name}</Text>
         </View>
 
         <View style={styles.viewItemContainer}>
           <Text style={styles.viewItemText}>Email</Text>
-          <Text style={styles.viewItemInfo}>user@googlemail.com</Text>
+          <Text style={styles.viewItemInfo}>{userData.email}</Text>
         </View>
 
         <View style={styles.viewItemContainer}>
           <Text style={styles.viewItemText}>Phone</Text>
-          <Text style={styles.viewItemInfo}>12345 67910</Text>
+          <Text style={styles.viewItemInfo}>{userData.phone}</Text>
         </View>
 
         <View style={styles.viewItemContainer}>
           <Text style={styles.viewItemText}>Address</Text>
-          <Text style={styles.viewItemInfo}>user's address</Text>
+          <Text style={styles.viewItemInfo}>{userData.address}</Text>
         </View>
 
         <View style={styles.viewItemContainer}>
           <Text style={styles.viewItemText}>Website</Text>
-          <Text style={styles.viewItemInfo}>user's website</Text>
+          <Text style={styles.viewItemInfo}>{userData.website}</Text>
         </View>
 
         {/* Friends section */}
@@ -139,6 +145,53 @@ const aboutItems = [
         </View>
       </View>
     )}
+
+{/*About/Edit */}
+
+{activeAboutTab === 'Edit' && (
+      <View style={styles.aboutEditContainer}>
+        <View style={styles.editItemContainer}>
+          <Text style={styles.editItemText}>Name</Text>
+          <TextInput style={styles.editItemInfo} value={editedData.name}
+            onChangeText={(text) => setEditedData({ ...editedData, name: text })}
+          ></TextInput>
+        </View>
+
+        <View style={styles.editItemContainer}>
+          <Text style={styles.editItemText}>Email</Text>
+          <TextInput style={styles.editItemInfo} keyboardType="email-address"
+            autoCapitalize="none"
+            value={editedData.email}
+            onChangeText={(text) => setEditedData({ ...editedData, email: text })}></TextInput>
+        </View>
+
+        <View style={styles.editItemContainer}>
+          <Text style={styles.editItemText}>Phone</Text>
+          <TextInput style={styles.editItemInfo} keyboardType="phone-pad"
+            value={editedData.phone}
+            onChangeText={(text) => setEditedData({ ...editedData, phone: text })}></TextInput>
+        </View>
+
+        <View style={styles.editItemContainer}>
+          <Text style={styles.editItemText}>Address</Text>
+          <TextInput style={styles.editItemInfo} value={editedData.address}
+            onChangeText={(text) => setEditedData({ ...editedData, address: text })}></TextInput>
+        </View>
+
+        <View style={styles.editItemContainer}>
+          <Text style={styles.editItemText}>Website</Text>
+          <TextInput style={styles.editItemInfo} keyboardType="url"
+            autoCapitalize="none"
+            value={editedData.website}
+            onChangeText={(text) => setEditedData({ ...editedData, website: text })}></TextInput>
+        </View>
+
+        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+      <Text style={styles.saveButtonText}>Save</Text>
+    </TouchableOpacity>
+      </View>
+)}
+
   </View>
 )}
 
@@ -422,7 +475,7 @@ viewItemContainer: {
   paddingHorizontal: 30,
   paddingVertical: 15,
   marginBottom: 20,
-  width: "90vw"
+  width: "90vw",
 },
 
 viewItemText: {
@@ -436,8 +489,53 @@ viewItemInfo: {
   border: "2px solid #f1f1f1",
   width: "90%",
   paddingVertical: 5,
-  paddingLeft: 10
-}
+  paddingLeft: 10,
+  height: 32
+},
 
+/*About/Edit styles*/
+aboutEditContainer: {
+  display: "flex",
+  width: "90vw",
+  justifyContent: "center",
+  alignItems: "center",
+  marginBottom: 30
+},
+
+editItemContainer: {
+  backgroundColor: "#fff",
+  justifyContent: "flex-start",
+  alignItems: "flex-start",
+  paddingHorizontal: 30,
+  paddingVertical: 15,
+  marginBottom: 20,
+  width: "90vw"
+},
+
+editItemText: {
+  fontSize: 20,
+  fontWeight: 600,
+  marginBottom: 10,
+  color: "#000",
+},
+
+editItemInfo: {
+  border: "2px solid #f1f1f1",
+  width: "90%",
+  paddingVertical: 5,
+  paddingLeft: 10
+},
+
+saveButton: {
+  width: 100,
+  paddingVertical: 10,
+  backgroundColor: "#2d5be3",
+  borderRadius: 10,
+},
+
+saveButtonText: {
+  color: "#fff",
+  textAlign: "center",
+}
 
 });
