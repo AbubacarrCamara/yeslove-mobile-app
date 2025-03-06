@@ -1,7 +1,10 @@
-<<<<<<< HEAD
+
 import React, { useState } from "react"
 import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
+import { ApiApiFactory } from "../../generated-api/api";
+import { useFocusEffect } from "@react-navigation/native";
+
 
 export default function ProfilePage() {
 const [activeTab, setActiveTab] = useState("Timeline");
@@ -9,6 +12,14 @@ const [activeAboutTab, setActiveAboutTab] = useState("View");
 const [userData, setUserData] = useState("")
 
 const [editedData, setEditedData] = useState({ ...userData });
+
+useFocusEffect(() => {
+  ApiApiFactory()
+    .getUserProfile("3c99982d-56f4-49e4-901f-0704211be1df")
+    .then((response) => {
+      console.log(response.data);
+    });
+});
 
 const handleSave = () => {
   setUserData(editedData);
@@ -21,29 +32,7 @@ const navBarItems = [
 
 const aboutItems = [
   "View", "Edit"
-]
-
-=======
-import {
-  Image,
-  StyleSheet,
-  Platform,
-  Text,
-  View,
-  ScrollView,
-} from "react-native";
-import { ApiApiFactory } from "../../generated-api/api";
-import { useFocusEffect } from "@react-navigation/native";
-
-export default function ProfilePage() {
-  useFocusEffect(() => {
-    ApiApiFactory()
-      .getUserProfile("3c99982d-56f4-49e4-901f-0704211be1df")
-      .then((response) => {
-        console.log(response.data);
-      });
-  });
->>>>>>> main
+];
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer} style={styles.container}>

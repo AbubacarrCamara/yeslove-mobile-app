@@ -8,19 +8,15 @@ import { setName } from "../store/userSlice"
 
 export default function HomeScreen() {
 const router = useRouter()
-const dispatch = useDispatch();
 const name = useSelector((state) => state.user.name)
 
-const handleChangeName = () => {
-  dispatch(setName("Test user"))
-}
+
+
+console.log("Current name from store:", name); 
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to the Home Page {name}!</Text>
-      <TouchableOpacity onPress={handleChangeName}>
-        <Text>change name</Text>
-      </TouchableOpacity>
     </View>
   );
 }
