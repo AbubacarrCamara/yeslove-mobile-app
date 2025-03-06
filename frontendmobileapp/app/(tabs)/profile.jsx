@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from "react"
 import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +23,27 @@ const aboutItems = [
   "View", "Edit"
 ]
 
+=======
+import {
+  Image,
+  StyleSheet,
+  Platform,
+  Text,
+  View,
+  ScrollView,
+} from "react-native";
+import { ApiApiFactory } from "../../generated-api/api";
+import { useFocusEffect } from "@react-navigation/native";
+
+export default function ProfilePage() {
+  useFocusEffect(() => {
+    ApiApiFactory()
+      .getUserProfile("3c99982d-56f4-49e4-901f-0704211be1df")
+      .then((response) => {
+        console.log(response.data);
+      });
+  });
+>>>>>>> main
 
   return (
     <ScrollView contentContainerStyle={styles.contentContainer} style={styles.container}>
@@ -243,8 +265,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: "bold",
+    color: "#333",
   },
   profileImageContainer: {
     display: "flex",
