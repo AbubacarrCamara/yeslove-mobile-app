@@ -5,7 +5,9 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import Header from "./header.jsx"
+import Header from "./header.jsx";
+import { Provider } from "react-redux";
+import { store } from "./store/store.ts"
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -29,6 +31,7 @@ export default function RootLayout() {
   }
 
   return (
+    <Provider store={store}>
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
 
       <StatusBar style="auto" />
@@ -39,5 +42,6 @@ export default function RootLayout() {
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
+    </Provider>
   );
 }

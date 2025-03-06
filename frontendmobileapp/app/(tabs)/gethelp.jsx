@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Platform, Text, View, ScrollView, Header } from 'react-native';
-
+import { useDispatch, useSelector } from "react-redux";
 export default function TabTwoScreen() {
   return (
     <View style={styles.container}>
