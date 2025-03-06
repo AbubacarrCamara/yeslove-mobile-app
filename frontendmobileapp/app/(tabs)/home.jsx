@@ -1,13 +1,22 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useDispatch, useSelector } from "react-redux"; 
+import { setName } from "../store/userSlice"
+
+
 
 export default function HomeScreen() {
 const router = useRouter()
+const name = useSelector((state) => state.user.name)
+
+
+
+console.log("Current name from store:", name); 
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to the Home Page!</Text>
+      <Text style={styles.title}>Welcome to the Home Page {name}!</Text>
     </View>
   );
 }
@@ -23,6 +32,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
+    textAlign: "center",
   },
   button: {
     backgroundColor: '#007bff',

@@ -1,15 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from "expo-router";
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 export default function Header() {
   const router = useRouter()
   return (
     <View style={styles.header}>
       <Text style={styles.title}>Yeslove!</Text>
-      <TouchableOpacity style={styles.button} onPress={() => router.replace("/")}>
-        <Text style={styles.buttonText}>Log out</Text>
-      </TouchableOpacity>
+      <FontAwesome5 onClick={() => router.replace("/(tabs)/profile")} style={styles.profile} size={24} name="user-alt" />
     </View>
   );
 }
@@ -32,17 +31,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   profile: {
-    marginRight: 30,
-  },
-  button: {
-    borderRadius: 20,
-    backgroundColor: "#2d5be3",
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
+    marginRight: 15,
   }
 });
 
