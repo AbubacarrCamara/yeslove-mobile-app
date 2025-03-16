@@ -159,6 +159,10 @@ def register_models(api):
     "email": fields.String(description="User's email (Optional)"),
     "user_id": fields.Integer(description="User's database ID (Optional)"),
     })
+    
+    models["user_query_response"] = api.model("UserQueryResponse", {
+        "keycloak_id": fields.String(description="User's Keycloak ID")
+    })
 
 
     return models

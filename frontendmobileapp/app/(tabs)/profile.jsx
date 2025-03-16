@@ -4,6 +4,8 @@ import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, T
 import { useDispatch, useSelector } from "react-redux";
 import { ApiApiFactory } from "../../generated-api/api";
 import { useFocusEffect } from "@react-navigation/native";
+import {setProfileInformation} from "./../store/profileSlice"
+
 
 
 export default function ProfilePage() {
@@ -12,14 +14,20 @@ const [activeAboutTab, setActiveAboutTab] = useState("View");
 const [userData, setUserData] = useState("")
 
 const [editedData, setEditedData] = useState({ ...userData });
+const userId = useSelector((state) => state.user.id);
+const userName = useSelector((state) => state.profile.info.username);
+const bio = useSelector((state) => state.profile.info.bio);
+const dispatch = useDispatch();
 
-useFocusEffect(() => {
+
+
+useFocusEffect(React.useCallback(() => {
   ApiApiFactory()
-    .getUserProfile("3c99982d-56f4-49e4-901f-0704211be1df")
+    .getUserProfile(userId)
     .then((response) => {
-      console.log(response.data);
+      dispatch(setProfileInformation(response.data));
     });
-});
+}, []));
 
 const handleSave = () => {
   setUserData(editedData);
@@ -44,7 +52,7 @@ const aboutItems = [
             <ImageBackground style={styles.profileBackgroundImage}  imageStyle={{ borderRadius: 15}} source={{ uri: "https://yeslove.co.uk/wp-content/themes/cirkle/assets/img/dummy-banner.jpg" }}>
                  <View style={styles.overlay}></View>
                  <Image style={styles.profileImage} source={{ uri: "https://yeslove.co.uk/wp-content/themes/cirkle/assets/img/avatar/bp-avatar.png" }}></Image>
-                 <Text style={styles.userName}>User Name</Text>
+                 <Text style={styles.userName}>{userName}</Text>
                  <View style={styles.userStatsContainer}>
                     <Text style={styles.userStats}>Posts: <Text style={styles.userStatsNumber}>0</Text></Text>
                     <Text style={styles.userStats}>Comments: <Text style={styles.userStatsNumber}>0</Text></Text>
@@ -57,7 +65,7 @@ const aboutItems = [
 
 {/* User bio */}
 
-        <View style={styles.userBioContainer}></View>
+        <View style={styles.userBioContainer}>{bio}</View>
 
 
 {/*Profile navigation*/}

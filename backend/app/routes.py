@@ -221,9 +221,10 @@ class RefreshToken(Resource):
 class GetUserKeycloakIDFlexible(Resource):
     @require_auth()
     @main_api.expect(models["user_query"])  # ✅ Require Authorization Header
-    def get(self):
+    @main_api.response(200, "Success", models["user_query_response"])  # ✅ Ensure correct model
+    def post(self):
         """Retrieve a user's Keycloak ID by username (required), with optional email or user ID."""
-        data = request.args
+        data = request.json
         username = data.get("username")
         email = data.get("email")
         user_id = data.get("user_id")

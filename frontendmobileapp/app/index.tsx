@@ -5,7 +5,7 @@ import axios from 'axios';
 import {ApiApiFactory, ApiApi} from "../generated-api/api";
 import { TOKEN_REFRESH_SERVICE } from '@/ts/token-refresh-service';
 import { useDispatch } from 'react-redux';
-import { setName } from './store/userSlice';
+import { setName, setUserId } from './store/userSlice';
 
 
 const Login = () => {
@@ -33,10 +33,17 @@ const testLogin = (username: string, password: string) => {
     dispatch(setName(username));
     axios.defaults.headers.common['Authorization'] = response.data.access_token ?? "";
     TOKEN_REFRESH_SERVICE.startRefreshingToken(response.data.refresh_token ?? "");
+  })
+  .then((_) => {
+    return ApiApiFactory().postGetUserKeycloakIdFlexible({username: username})
+  })
+  .then((response) => {
+    dispatch(setUserId(response.data.keycloak_id))
     router.replace("/(tabs)/home");  
-  }).catch((error) => {
+  })
+  .catch((error) => {
     console.error('Login failed:', error);
-  });
+  })
 
 };
 
