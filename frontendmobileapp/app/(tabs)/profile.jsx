@@ -42,6 +42,7 @@ const aboutItems = [
   "View", "Edit"
 ];
 
+
   return (
     <ScrollView contentContainerStyle={styles.contentContainer} style={styles.container}>
 
