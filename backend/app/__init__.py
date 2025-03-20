@@ -8,6 +8,12 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 from app.config import DevelopmentConfig
 from app.utils import get_keycloak_public_keys
+from app.api.auth.auth_routes import api as auth_api
+from app.api.profile.profile_routes import api as profile_api
+from app.api.feed.feed_routes import api as feed_api
+from app.api.chat.chat_routes import api as chat_api
+
+
 
 # Load environment variables
 load_dotenv()
@@ -38,9 +44,11 @@ def create_app(config_class=DevelopmentConfig):
     app.config["KEYCLOAK_CERTS_URL"] = config_class.keycloak_certs_url()
 
     # 📊 Initialize API
-    from app.routes import main_api
     api = Api(app, title="YesLove API", version="1.0", doc="/swagger")
-    api.add_namespace(main_api, path="/api")
+    api.add_namespace(profile_api, path="/api/profile")
+    api.add_namespace(auth_api, path="/api/auth")
+    api.add_namespace(feed_api, path="/api/feed")
+    api.add_namespace(chat_api, path="/api/chat")
 
     # 🔐 Fetch Keycloak Public Keys (Runs ONCE at startup)
     with app.app_context():
