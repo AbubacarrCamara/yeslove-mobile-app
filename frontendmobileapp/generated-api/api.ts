@@ -514,6 +514,19 @@ export interface UserQuery {
      */
     'user_id'?: number;
 }
+/**
+ * 
+ * @export
+ * @interface UserQueryResponse
+ */
+export interface UserQueryResponse {
+    /**
+     * User\'s Keycloak ID
+     * @type {string}
+     * @memberof UserQueryResponse
+     */
+    'keycloak_id'?: string;
+}
 
 /**
  * ApiApi - axios parameter creator
@@ -825,42 +838,6 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
         },
         /**
          * 
-         * @summary Retrieve a user\'s Keycloak ID by username (required), with optional email or user ID
-         * @param {UserQuery} payload 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGetUserKeycloakIdFlexible: async (payload: UserQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'payload' is not null or undefined
-            assertParamExists('getGetUserKeycloakIdFlexible', 'payload', payload)
-            const localVarPath = `/api/user/keycloak_id`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Get profile visibility settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1086,6 +1063,42 @@ export const ApiApiAxiosParamCreator = function (configuration?: Configuration) 
             assertParamExists('postFollowUser', 'payload', payload)
             const localVarPath = `/api/follow/{keycloak_id}`
                 .replace(`{${"keycloak_id"}}`, encodeURIComponent(String(keycloakId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(payload, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Retrieve a user\'s Keycloak ID by username (required), with optional email or user ID
+         * @param {UserQuery} payload 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGetUserKeycloakIdFlexible: async (payload: UserQuery, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'payload' is not null or undefined
+            assertParamExists('postGetUserKeycloakIdFlexible', 'payload', payload)
+            const localVarPath = `/api/user/keycloak_id`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1629,19 +1642,6 @@ export const ApiApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Retrieve a user\'s Keycloak ID by username (required), with optional email or user ID
-         * @param {UserQuery} payload 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getGetUserKeycloakIdFlexible(payload: UserQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getGetUserKeycloakIdFlexible(payload, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ApiApi.getGetUserKeycloakIdFlexible']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Get profile visibility settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1730,6 +1730,19 @@ export const ApiApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postFollowUser(keycloakId, payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ApiApi.postFollowUser']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Retrieve a user\'s Keycloak ID by username (required), with optional email or user ID
+         * @param {UserQuery} payload 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postGetUserKeycloakIdFlexible(payload: UserQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserQueryResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postGetUserKeycloakIdFlexible(payload, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ApiApi.postGetUserKeycloakIdFlexible']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1972,16 +1985,6 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
         },
         /**
          * 
-         * @summary Retrieve a user\'s Keycloak ID by username (required), with optional email or user ID
-         * @param {UserQuery} payload 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getGetUserKeycloakIdFlexible(payload: UserQuery, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getGetUserKeycloakIdFlexible(payload, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Get profile visibility settings
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2050,6 +2053,16 @@ export const ApiApiFactory = function (configuration?: Configuration, basePath?:
          */
         postFollowUser(keycloakId: string, payload: FollowUserRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.postFollowUser(keycloakId, payload, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Retrieve a user\'s Keycloak ID by username (required), with optional email or user ID
+         * @param {UserQuery} payload 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postGetUserKeycloakIdFlexible(payload: UserQuery, options?: RawAxiosRequestConfig): AxiosPromise<UserQueryResponse> {
+            return localVarFp.postGetUserKeycloakIdFlexible(payload, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -2274,18 +2287,6 @@ export class ApiApi extends BaseAPI {
 
     /**
      * 
-     * @summary Retrieve a user\'s Keycloak ID by username (required), with optional email or user ID
-     * @param {UserQuery} payload 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ApiApi
-     */
-    public getGetUserKeycloakIdFlexible(payload: UserQuery, options?: RawAxiosRequestConfig) {
-        return ApiApiFp(this.configuration).getGetUserKeycloakIdFlexible(payload, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Get profile visibility settings
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2367,6 +2368,18 @@ export class ApiApi extends BaseAPI {
      */
     public postFollowUser(keycloakId: string, payload: FollowUserRequest, options?: RawAxiosRequestConfig) {
         return ApiApiFp(this.configuration).postFollowUser(keycloakId, payload, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Retrieve a user\'s Keycloak ID by username (required), with optional email or user ID
+     * @param {UserQuery} payload 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ApiApi
+     */
+    public postGetUserKeycloakIdFlexible(payload: UserQuery, options?: RawAxiosRequestConfig) {
+        return ApiApiFp(this.configuration).postGetUserKeycloakIdFlexible(payload, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -83,18 +83,6 @@
             }
         },
         "/api/email_notifications": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    }
-                },
-                "summary": "Get email notification settings",
-                "operationId": "get_email_notifications",
-                "tags": [
-                    "api"
-                ]
-            },
             "post": {
                 "responses": {
                     "200": {
@@ -113,6 +101,18 @@
                         }
                     }
                 ],
+                "tags": [
+                    "api"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "Get email notification settings",
+                "operationId": "get_email_notifications",
                 "tags": [
                     "api"
                 ]
@@ -500,18 +500,6 @@
             }
         },
         "/api/profile_visibility": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    }
-                },
-                "summary": "Get profile visibility settings",
-                "operationId": "get_profile_visibility",
-                "tags": [
-                    "api"
-                ]
-            },
             "post": {
                 "responses": {
                     "200": {
@@ -530,6 +518,18 @@
                         }
                     }
                 ],
+                "tags": [
+                    "api"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "Get profile visibility settings",
+                "operationId": "get_profile_visibility",
                 "tags": [
                     "api"
                 ]
@@ -673,14 +673,17 @@
             }
         },
         "/api/user/keycloak_id": {
-            "get": {
+            "post": {
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/UserQueryResponse"
+                        }
                     }
                 },
                 "summary": "Retrieve a user's Keycloak ID by username (required), with optional email or user ID",
-                "operationId": "get_get_user_keycloak_id_flexible",
+                "operationId": "post_get_user_keycloak_id_flexible",
                 "parameters": [
                     {
                         "name": "payload",
@@ -819,6 +822,15 @@
                 "user_id": {
                     "type": "integer",
                     "description": "User's database ID (Optional)"
+                }
+            },
+            "type": "object"
+        },
+        "UserQueryResponse": {
+            "properties": {
+                "keycloak_id": {
+                    "type": "string",
+                    "description": "User's Keycloak ID"
                 }
             },
             "type": "object"

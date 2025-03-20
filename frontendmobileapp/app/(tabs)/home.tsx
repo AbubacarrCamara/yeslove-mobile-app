@@ -1,14 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useDispatch, useSelector } from "react-redux"; 
 import { setName } from "../store/userSlice"
+import { useSelector } from 'react-redux';
+import { State } from '../store/store';
 
 
 
 export default function HomeScreen() {
 const router = useRouter()
-const name = useSelector((state) => state.user.name)
+const name = useSelector((state: State) => state.user.name);
 
 
 
