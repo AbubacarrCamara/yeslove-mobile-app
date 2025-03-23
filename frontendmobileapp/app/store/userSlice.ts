@@ -9,7 +9,7 @@ const userSlice = createSlice({
         },
         setUserId: (state, action) => {
             state.id = action.payload;
-        }
+        },
     },
 })
 

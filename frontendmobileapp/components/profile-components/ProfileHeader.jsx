@@ -42,7 +42,8 @@ const ProfileHeader = () => {
     
     {/* User bio */}
     
-            <View style={styles.userBioContainer}>{bio}</View>
+            <View style={styles.userBioContainer}>
+              <Text style={styles.userBioText}>{bio}</Text></View>
             </View>
     
   )

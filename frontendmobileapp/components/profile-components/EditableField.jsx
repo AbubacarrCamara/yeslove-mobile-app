@@ -3,12 +3,14 @@ import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, T
 import styles from "../../Styles/ProfileStyles";
 
 
-const EditableField = ( { label }) => {
-    const [value, setValue] = useState("")
+const EditableField = ( { label, value, onChange }) => {
+
   return (
     <View style={styles.editItemContainer}>
       <Text style={styles.editItemText}>{label}</Text>
-      <TextInput style={styles.editItemInfo} value={value} onChangeText={setValue} />
+      <TextInput style={styles.editItemInfo} value={value} onChangeText={(text) => {
+                    onChange(text);
+                }} />
     </View>
   )
 }

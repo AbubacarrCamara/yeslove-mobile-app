@@ -1,11 +1,81 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
 import styles from "../../Styles/ProfileStyles";
 import EditableField from "./EditableField";
+import { useDispatch, useSelector } from "react-redux";
+import { setName, setEmail, setPhone, setAddress, setWebsite, setBio } from "../../app/store/aboutSlice";
+import {setProfileInformation} from "../../app/store/profileSlice";
 
-const aboutItems = ["View", "Edit"]
 
 const AboutSection = ({ activeAboutTab, setActiveAboutTab }) => {
+
+const name = useSelector((state) => state.about.name);
+const email = useSelector((state) => state.about.email);
+const phone = useSelector((state) => state.about.phone);
+const address = useSelector((state) => state.about.address);
+const website = useSelector((state) => state.about.website);
+const bio = useSelector((state) => state.about.bio)
+const dispatch = useDispatch();
+const aboutItems = ["View", "Edit"];
+
+
+const [editedName, setEditedName] = useState(name);
+  const [editedEmail, setEditedEmail] = useState(email);
+  const [editedPhone, setEditedPhone] = useState(phone);
+  const [editedAddress, setEditedAddress] = useState(address);
+  const [editedWebsite, setEditedWebsite] = useState(website);
+  const [editedBio, setEditedBio] = useState(bio);
+
+  useEffect(() => {
+    setEditedName(name);
+    setEditedEmail(email);
+    setEditedPhone(phone);
+    setEditedAddress(address);
+    setEditedWebsite(website);
+    setEditedBio(bio)
+}, [name, email, phone, address, website, bio]);
+  
+  const handleFieldChange = (field, value) => {
+    switch (field) {
+      case "Name":
+        setEditedName(value);
+        break;
+      case "Email":
+        setEditedEmail(value);
+        break;
+      case "Phone":
+        setEditedPhone(value);
+        break;
+      case "Address":
+        setEditedAddress(value);
+        break;
+      case "Website":
+        setEditedWebsite(value);
+        break;
+        case "Bio":
+        setEditedBio(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+const handleSave = () => {
+  dispatch(setName(editedName));
+  dispatch(setEmail(editedEmail));
+  dispatch(setPhone(editedPhone));
+  dispatch(setAddress(editedAddress));
+  dispatch(setWebsite(editedWebsite));
+  dispatch(setBio(editedBio));
+
+  dispatch(setProfileInformation({ bio: editedBio }))
+
+  setActiveAboutTab("View");
+};
+
+
+
+
   return (
     <View>
       {/* About Navbar */}
@@ -25,27 +95,27 @@ const AboutSection = ({ activeAboutTab, setActiveAboutTab }) => {
         <View>
           <View style={styles.viewItemContainer}>
            <Text style={styles.viewItemText}>Name</Text>
-           <Text style={styles.viewItemInfo}></Text>
+           <Text style={styles.viewItemInfo}>{name}</Text>
          </View>
  
          <View style={styles.viewItemContainer}>
            <Text style={styles.viewItemText}>Email</Text>
-           <Text style={styles.viewItemInfo}></Text>
+           <Text style={styles.viewItemInfo}>{email}</Text>
          </View>
  
          <View style={styles.viewItemContainer}>
            <Text style={styles.viewItemText}>Phone</Text>
-           <Text style={styles.viewItemInfo}></Text>
+           <Text style={styles.viewItemInfo}>{phone}</Text>
          </View>
  
          <View style={styles.viewItemContainer}>
            <Text style={styles.viewItemText}>Address</Text>
-           <Text style={styles.viewItemInfo}></Text>
+           <Text style={styles.viewItemInfo}>{address}</Text>
          </View>
  
          <View style={styles.viewItemContainer}>
            <Text style={styles.viewItemText}>Website</Text>
-           <Text style={styles.viewItemInfo}></Text>
+           <Text style={styles.viewItemInfo}>{website}</Text>
          </View>
  
          {/* Friends section */}
@@ -73,12 +143,21 @@ const AboutSection = ({ activeAboutTab, setActiveAboutTab }) => {
 
 
 
-      {activeAboutTab === "Edit" && (
-        <View>
-          <EditableField label="Name" />
-          <EditableField label="Email" />
-        </View>
-      )}
+{activeAboutTab === "Edit" && (
+  <View>
+    <EditableField label="Name" value={editedName} onChange={(value) => handleFieldChange("Name", value)} />
+    <EditableField label="Bio" value={editedBio} onChange={(value) => handleFieldChange("Bio", value)} />
+    <EditableField label="Email" value={editedEmail} onChange={(value) => handleFieldChange("Email", value)} />
+    <EditableField label="Phone" value={editedPhone} onChange={(value) => handleFieldChange("Phone", value)} />
+    <EditableField label="Address" value={editedAddress} onChange={(value) => handleFieldChange("Address", value)} />
+    <EditableField label="Website" value={editedWebsite} onChange={(value) => handleFieldChange("Website", value)} />
+
+    <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+            <Text style={styles.saveButtonText}>Save</Text>
+          </TouchableOpacity>
+  </View>
+)}
+
     </View>
   )
 }

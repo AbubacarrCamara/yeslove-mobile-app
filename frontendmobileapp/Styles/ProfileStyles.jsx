@@ -77,7 +77,9 @@ userBioContainer:{
   shadowOffset: { width: 0, height: 2 },
   shadowOpacity: 0.2,
   shadowRadius: 4,
-  padding: 10,
+  padding: 13,
+},
+userBioText: {
   color: "#000"
 },
 
@@ -303,13 +305,18 @@ editItemInfo: {
 saveButton: {
   width: 100,
   paddingVertical: 10,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
   backgroundColor: "#2d5be3",
   borderRadius: 10,
+  marginBottom: 50
 },
 
 saveButtonText: {
-  color: "#fff",
+  color: "#eee",
   textAlign: "center",
+  fontSize: 19
 }
 
 });
