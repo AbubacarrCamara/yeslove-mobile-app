@@ -5,8 +5,9 @@ import profileReducer from "./profileSlice";
 export const store = configureStore({
     reducer: { 
         user: userReducer,
-        profile: profileReducer
+        profile: profileReducer,
     },
+    devTools: process.env.NODE_ENV !== 'production'
 })
 export type State = ReturnType<typeof store.getState>
 

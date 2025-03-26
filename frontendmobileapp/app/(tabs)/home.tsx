@@ -8,7 +8,6 @@ import { State } from '../store/store';
 
 
 export default function HomeScreen() {
-const router = useRouter()
 const name = useSelector((state: State) => state.user.name);
 
 

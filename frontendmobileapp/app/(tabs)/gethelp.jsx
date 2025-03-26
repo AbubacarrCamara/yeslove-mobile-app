@@ -1,22 +1,18 @@
-import { Image, StyleSheet, Platform, Text, View, ScrollView, Header } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
-export default function TabTwoScreen() {
+/*components */
+import GetHelpHeader from "../../components/gethelp-components/GetHelpHeader";
+import GetHelpSearchBar from "../../components/gethelp-components/GetHelpSearchBar";
+import GetHelpProfessionals from "../../components/gethelp-components/GetHelpProfessionals";
+import styles from "../../Styles/GetHelpStyles";
+
+export default function GetHelpPage() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to the Get help Page!</Text>
-    </View>
+    <ScrollView  contentContainerStyle={styles.contentContainer} style={styles.container}>
+      <GetHelpHeader />
+      <GetHelpSearchBar />
+      <GetHelpProfessionals />
+    </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-});
