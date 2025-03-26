@@ -12,24 +12,7 @@ const aboutSlice = createSlice({
      
     }, 
     reducers: {
-        setName: (state, action) => {
-            state.name = action.payload; 
-        },
-        setEmail: (state, action) => {
-            state.email = action.payload; 
-        },
-        setPhone: (state, action) => {
-            state.phone = action.payload; 
-        },
-        setAddress: (state, action) => {
-            state.address = action.payload; 
-        },
-        setWebsite: (state, action) => {
-            state.website = action.payload; 
-        },
-        setBio: (state, action) => {
-            state.bio = action.payload
-        }
+
 
     },
 })

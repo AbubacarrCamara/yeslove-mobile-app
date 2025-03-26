@@ -3,18 +3,17 @@ import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, T
 import styles from "../../Styles/ProfileStyles";
 import EditableField from "./EditableField";
 import { useDispatch, useSelector } from "react-redux";
-import { setName, setEmail, setPhone, setAddress, setWebsite, setBio } from "../../app/store/aboutSlice";
-import {setProfileInformation} from "../../app/store/profileSlice";
+import {setProfileInformation, setName, setEmail, setPhone, setAddress, setWebsite, setBio } from "../../app/store/profileSlice";
 
 
 const AboutSection = ({ activeAboutTab, setActiveAboutTab }) => {
 
-const name = useSelector((state) => state.about.name);
-const email = useSelector((state) => state.about.email);
-const phone = useSelector((state) => state.about.phone);
-const address = useSelector((state) => state.about.address);
-const website = useSelector((state) => state.about.website);
-const bio = useSelector((state) => state.about.bio)
+const name = useSelector((state) => state.profile.info.contact_info.name);
+const email = useSelector((state) => state.profile.info.contact_info.email);
+const phone = useSelector((state) => state.profile.info.contact_info.phone);
+const address = useSelector((state) => state.profile.info.contact_info.address);
+const website = useSelector((state) => state.profile.info.contact_info.website);
+const bio = useSelector((state) => state.profile.info.bio)
 const dispatch = useDispatch();
 const aboutItems = ["View", "Edit"];
 
@@ -67,8 +66,6 @@ const handleSave = () => {
   dispatch(setAddress(editedAddress));
   dispatch(setWebsite(editedWebsite));
   dispatch(setBio(editedBio));
-
-  dispatch(setProfileInformation({ bio: editedBio }))
 
   setActiveAboutTab("View");
 };
