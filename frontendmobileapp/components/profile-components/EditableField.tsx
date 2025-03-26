@@ -3,16 +3,16 @@ import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, T
 import styles from "../../Styles/ProfileStyles";
 
 
-const EditableField = ( { label, value, onChange }) => {
+function EditableField({ label, value, onChange }: {label: string, value: string, onChange: (text: string) => void}) {
 
   return (
     <View style={styles.editItemContainer}>
       <Text style={styles.editItemText}>{label}</Text>
       <TextInput style={styles.editItemInfo} value={value} onChangeText={(text) => {
-                    onChange(text);
-                }} />
+        onChange(text);
+      } } />
     </View>
-  )
+  );
 }
 
 export default EditableField

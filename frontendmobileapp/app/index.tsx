@@ -2,10 +2,10 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import React, { useState } from 'react';
 import { useRouter } from "expo-router";
 import axios from 'axios';
-import {ApiApiFactory, ApiApi} from "../generated-api/api";
 import { TOKEN_REFRESH_SERVICE } from '@/ts/token-refresh-service';
 import { useDispatch } from 'react-redux';
 import { setName, setUserId } from './store/userSlice';
+import { AuthApiFactory, ProfileApiFactory } from '@/generated-api';
 
 
 const Login = () => {
@@ -28,14 +28,14 @@ const handleUsernameChange = (input: React.SetStateAction<string>) => {
 
 const testLogin = (username: string, password: string) => {
   axios.defaults.baseURL = "http://localhost:5000";
-  ApiApiFactory().postLogin({password: password, username: username})
+  AuthApiFactory().postLogin({password: password, username: username})
   .then((response) => {
     dispatch(setName(username));
     axios.defaults.headers.common['Authorization'] = response.data.access_token ?? "";
     TOKEN_REFRESH_SERVICE.startRefreshingToken(response.data.refresh_token ?? "");
   })
   .then((_) => {
-    return ApiApiFactory().postGetUserKeycloakIdFlexible({username: username})
+    return ProfileApiFactory().postGetUserKeycloakIdFlexible({username: username})
   })
   .then((response) => {
     dispatch(setUserId(response.data.keycloak_id))
