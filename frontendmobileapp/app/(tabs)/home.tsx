@@ -11,7 +11,6 @@ export default function HomeScreen() {
 const name = useSelector((state: State) => state.user.name);
 
 
-
 console.log("Current name from store:", name); 
 
   return (

@@ -2,7 +2,7 @@ import React from 'react'
 import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
 import styles from "../../Styles/ProfileStyles";
  import { useFocusEffect } from "@react-navigation/native";
- import {setProfileInformation} from "../../app/store/profileSlice";
+ import {setProfileInformationAction} from "../../app/store/profileSlice";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { ProfileApiFactory } from '@/generated-api';
 
@@ -17,7 +17,7 @@ const ProfileHeader = () => {
     ProfileApiFactory()
       .getUserProfile(userId)
       .then((response) => {
-        dispatch(setProfileInformation(response.data));
+        dispatch(setProfileInformationAction(response.data));
       });
   }, []));
 

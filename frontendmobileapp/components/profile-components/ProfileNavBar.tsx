@@ -2,7 +2,7 @@ import React from 'react'
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import styles from "../../Styles/ProfileStyles";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { setActiveTab } from '@/app/store/profileSlice';
+import { setActiveTabAction } from '@/app/store/profileSlice';
 
 const navBarItems = ["Timeline", "About", "Videos", "Notifications", "Photos", "Settings", "Messages", "Invitations"]
 
@@ -13,7 +13,7 @@ const ProfileNavBar = () => {
         <View style={styles.navBarContainer}>
           <View style={styles.navBar}>
             {navBarItems.map((tab) => (
-              <TouchableOpacity key={tab} style={[styles.navItem, activeTab === tab && styles.activeNavItem]} onPress={() => dispatch(setActiveTab(tab))}>
+              <TouchableOpacity key={tab} style={[styles.navItem, activeTab === tab && styles.activeNavItem]} onPress={() => dispatch(setActiveTabAction(tab))}>
                 <Text style={[styles.navText, activeTab === tab && styles.activeNavText]}>{tab}</Text>
                 {activeTab === tab && <View style={styles.activeIndicator} />}
               </TouchableOpacity>
