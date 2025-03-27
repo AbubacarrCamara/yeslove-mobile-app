@@ -4,12 +4,12 @@ import { useRouter } from 'expo-router';
 import { setName } from "../store/userSlice"
 import { useSelector } from 'react-redux';
 import { State } from '../store/store';
+import { useAppSelector } from '../store/hooks';
 
 
 
 export default function HomeScreen() {
-const name = useSelector((state: State) => state.user.name);
-
+const name = useAppSelector(state => state.user.name);
 
 
 console.log("Current name from store:", name); 

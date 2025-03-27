@@ -1,23 +1,23 @@
 import React from 'react'
 import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
 import styles from "../../Styles/ProfileStyles";
-import { useDispatch, useSelector } from "react-redux";
- import { ApiApiFactory } from "../../generated-api/api";
  import { useFocusEffect } from "@react-navigation/native";
- import {setProfileInformation} from "../../app/store/profileSlice";
+ import {setProfileInformationAction} from "../../app/store/profileSlice";
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { ProfileApiFactory } from '@/generated-api';
 
 
 const ProfileHeader = () => {
-  const userId = useSelector((state) => state.user.id);
-  const userName = useSelector((state) => state.profile.info.username);
-  const bio = useSelector((state) => state.profile.info.bio);
-  const dispatch = useDispatch();
+  const userId = useAppSelector((state) => state.user.id);
+  const userName = useAppSelector((state) => state.profile.info.username);
+  const bio = useAppSelector((state) => state.profile.info.bio);
+  const dispatch = useAppDispatch();
 
   useFocusEffect(React.useCallback(() => {
-    ApiApiFactory()
+    ProfileApiFactory()
       .getUserProfile(userId)
       .then((response) => {
-        dispatch(setProfileInformation(response.data));
+        dispatch(setProfileInformationAction(response.data));
       });
   }, []));
 

@@ -2,12 +2,14 @@ import React from 'react'
 import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
 import styles from "../../Styles/ProfileStyles";
 import AboutSection from "./AboutSection"
+import { useAppSelector } from '@/app/store/hooks';
 
-const ProfileContent = ({ activeTab, activeAboutTab, setActiveAboutTab }) => {
+const ProfileContent = () => {
+  let activeTab = useAppSelector(state => state.profile.view.activeTab);
   return (
     <View style={styles.content}>
       {activeTab === "Timeline" && <Text>Timeline Page Content</Text>}
-      {activeTab === "About" && <AboutSection activeAboutTab={activeAboutTab} setActiveAboutTab={setActiveAboutTab} />}
+      {activeTab === "About" && <AboutSection/>}
       {activeTab === "Videos" && <Text>Videos Page Content</Text>}
       {activeTab === "Notifications" && <Text>Notifications Page Content</Text>}
       {activeTab === "Photos" && <Text>Photos Page Content</Text>}

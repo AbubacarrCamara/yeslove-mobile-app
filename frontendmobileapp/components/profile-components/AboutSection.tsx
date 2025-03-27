@@ -3,18 +3,22 @@ import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, T
 import styles from "../../Styles/ProfileStyles";
 import EditableField from "./EditableField";
 import { useDispatch, useSelector } from "react-redux";
-import {setProfileInformation, setName, setEmail, setPhone, setAddress, setWebsite, setBio } from "../../app/store/profileSlice";
+import {setProfileInformationAction, setNameAction, setEmailAction, setPhoneAction, setAddressAction, setWebsiteAction, setBioAction, setActiveAboutTabAction, persistUserInfoAction } from "../../app/store/profileSlice";
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { ProfileApiFactory } from '@/generated-api';
 
 
-const AboutSection = ({ activeAboutTab, setActiveAboutTab }) => {
+const AboutSection = () => {
 
-const name = useSelector((state) => state.profile.info.contact_info.name);
-const email = useSelector((state) => state.profile.info.contact_info.email);
-const phone = useSelector((state) => state.profile.info.contact_info.phone);
-const address = useSelector((state) => state.profile.info.contact_info.address);
-const website = useSelector((state) => state.profile.info.contact_info.website);
-const bio = useSelector((state) => state.profile.info.bio)
-const dispatch = useDispatch();
+const name = useAppSelector(state => state.profile.info.contact_info?.name ?? "");
+const email = useAppSelector(state => state.profile.info.contact_info?.email ?? "");
+const phone = useAppSelector(state => state.profile.info.contact_info?.phone ?? "");
+const address = useAppSelector(state => state.profile.info.contact_info?.address ?? "");
+const website = useAppSelector(state => state.profile.info.contact_info?.website ?? "");
+const bio = useAppSelector(state => state.profile.info.bio ?? "");
+const info = useAppSelector(state => state.profile.info);
+const activeAboutTab  = useAppSelector(state => state.profile.view.activeAboutTab);
+const dispatch = useAppDispatch();
 const aboutItems = ["View", "Edit"];
 
 
@@ -34,7 +38,7 @@ const [editedName, setEditedName] = useState(name);
     setEditedBio(bio)
 }, [name, email, phone, address, website, bio]);
   
-  const handleFieldChange = (field, value) => {
+  const handleFieldChange = (field: string, value: string) => {
     switch (field) {
       case "Name":
         setEditedName(value);
@@ -60,18 +64,16 @@ const [editedName, setEditedName] = useState(name);
   };
 
 const handleSave = () => {
-  dispatch(setName(editedName));
-  dispatch(setEmail(editedEmail));
-  dispatch(setPhone(editedPhone));
-  dispatch(setAddress(editedAddress));
-  dispatch(setWebsite(editedWebsite));
-  dispatch(setBio(editedBio));
+  dispatch(setNameAction(editedName ?? ""));
+  dispatch(setEmailAction(editedEmail ?? ""));
+  dispatch(setPhoneAction(editedPhone ?? ""));
+  dispatch(setAddressAction(editedAddress ?? ""));
+  dispatch(setWebsiteAction(editedWebsite ?? ""));
+  dispatch(setBioAction(editedBio ?? ""));
+  dispatch(persistUserInfoAction());
 
-  setActiveAboutTab("View");
-};
-
-
-
+  dispatch(setActiveAboutTabAction("View"))
+}
 
   return (
     <View>
@@ -79,7 +81,7 @@ const handleSave = () => {
       <View style={styles.aboutNavBarContainer}>
         <View style={styles.aboutNavBar}>
           {aboutItems.map((tab) => (
-            <TouchableOpacity key={tab} style={[styles.aboutItem, activeAboutTab === tab && styles.activeAboutItem]} onPress={() => setActiveAboutTab(tab)}>
+            <TouchableOpacity key={tab} style={[styles.aboutItem, activeAboutTab === tab && styles.activeAboutItem]} onPress={() => dispatch(setActiveAboutTabAction(tab))}>
               <Text style={[styles.navText, activeAboutTab === tab && styles.activeAboutNavText]}>{tab}</Text>
               {activeAboutTab === tab && <View style={styles.activeIndicator} />}
             </TouchableOpacity>
@@ -142,12 +144,12 @@ const handleSave = () => {
 
 {activeAboutTab === "Edit" && (
   <View>
-    <EditableField label="Name" value={editedName} onChange={(value) => handleFieldChange("Name", value)} />
-    <EditableField label="Bio" value={editedBio} onChange={(value) => handleFieldChange("Bio", value)} />
-    <EditableField label="Email" value={editedEmail} onChange={(value) => handleFieldChange("Email", value)} />
-    <EditableField label="Phone" value={editedPhone} onChange={(value) => handleFieldChange("Phone", value)} />
-    <EditableField label="Address" value={editedAddress} onChange={(value) => handleFieldChange("Address", value)} />
-    <EditableField label="Website" value={editedWebsite} onChange={(value) => handleFieldChange("Website", value)} />
+    <EditableField label="Name" value={editedName} onChange={(value: string) => handleFieldChange("Name", value)} />
+    <EditableField label="Bio" value={editedBio} onChange={(value: string) => handleFieldChange("Bio", value)} />
+    <EditableField label="Email" value={editedEmail} onChange={(value: string) => handleFieldChange("Email", value)} />
+    <EditableField label="Phone" value={editedPhone} onChange={(value: string) => handleFieldChange("Phone", value)} />
+    <EditableField label="Address" value={editedAddress} onChange={(value: string) => handleFieldChange("Address", value)} />
+    <EditableField label="Website" value={editedWebsite} onChange={(value: string) => handleFieldChange("Website", value)} />
 
     <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
             <Text style={styles.saveButtonText}>Save</Text>

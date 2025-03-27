@@ -1,4 +1,5 @@
 
+import { vw } from '@/ts/viewport-units';
 import { StyleSheet } from 'react-native';
 
 
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   profileBackgroundImage: {
-    width: "90vw",
+    width: vw(90),
     height: 340,
     display: "flex",
     justifyContent: "center",
@@ -41,7 +42,9 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: "50%",
-    border: "5px solid #fff"
+    borderWidth: 5,
+    borderStyle: "solid",
+    borderColor: "#fff"
   },
   userName: {
    color: "#fff",
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
   },
   userStats: {
     color: "#c5c5c5",
-    size: 20,
+    fontSize: 20,
     marginLeft: 10,
     marginRight: 10
   },
@@ -96,7 +99,7 @@ navBarContainer: {
 navBar: {
   flexDirection: "row",
   flexWrap: "wrap", 
-  width: "90vw", 
+  width: vw(90), 
   justifyContent: "center",
   backgroundColor: "#fff",
   paddingVertical: 10,
@@ -150,7 +153,7 @@ friendsContainer: {
 friends: {
   flexDirection: "column",
   flexWrap: "wrap", 
-  width: "80vw", 
+  width: vw(80), 
   justifyContent: "flex-start",
   backgroundColor: "#fff",
   paddingVertical: 6,
@@ -218,7 +221,7 @@ aboutNavBarContainer: {
 aboutNavBar: {
   flexDirection: "row",
   flexWrap: "wrap", 
-  width: "80vw", 
+  width: vw(80), 
   justifyContent: "center",
   backgroundColor: "#fff",
   paddingVertical: 3,
@@ -251,7 +254,7 @@ viewItemContainer: {
   paddingHorizontal: 30,
   paddingVertical: 15,
   marginBottom: 20,
-  width: "90vw",
+  width: vw(90),
 },
 
 viewItemText: {
@@ -262,7 +265,9 @@ viewItemText: {
 },
 
 viewItemInfo: {
-  border: "2px solid #f1f1f1",
+  borderWidth: 2,
+  borderStyle: "solid",
+  borderColor: "#f1f1f1",
   width: "90%",
   paddingVertical: 5,
   paddingLeft: 10,
@@ -272,7 +277,7 @@ viewItemInfo: {
 /*About/Edit styles*/
 aboutEditContainer: {
   display: "flex",
-  width: "90vw",
+  width: vw(90),
   justifyContent: "center",
   alignItems: "center",
   marginBottom: 30
@@ -285,7 +290,7 @@ editItemContainer: {
   paddingHorizontal: 30,
   paddingVertical: 15,
   marginBottom: 20,
-  width: "90vw"
+  width: vw(90)
 },
 
 editItemText: {
@@ -296,7 +301,9 @@ editItemText: {
 },
 
 editItemInfo: {
-  border: "2px solid #f1f1f1",
+  borderWidth: 2,
+  borderStyle: "solid",
+  borderColor: "#f1f1f1",
   width: "90%",
   paddingVertical: 5,
   paddingLeft: 10
