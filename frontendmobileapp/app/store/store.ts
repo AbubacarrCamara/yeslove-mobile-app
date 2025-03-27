@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 import profileReducer from "./profileSlice";
 import createSagaMiddleWare from "redux-saga"
-import mySaga from "./effects";
+import appSaga from "./effects";
 
 export const sagaMiddleWare = createSagaMiddleWare();
 
@@ -15,7 +15,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleWare)
 })
 
-sagaMiddleWare.run(mySaga)
+sagaMiddleWare.run(appSaga)
 
 export type State = ReturnType<typeof store.getState>
 
