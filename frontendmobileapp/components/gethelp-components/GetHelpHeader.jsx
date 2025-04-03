@@ -7,8 +7,11 @@ const GetHelpHeader = () => {
   return (
     <View>
         <View style={styles.ourProfessionalsContainer}>
-        <ImageBackground source={{ uri: "https://yeslove.co.uk/wp-content/uploads/2021/04/shape_7.png" }} style={styles.backgroundImage}>
-
+        <ImageBackground 
+    style={styles.imageBackground} 
+    source={{ uri: "https://yeslove.co.uk/wp-content/uploads/2021/04/shape_7.png" }} 
+    resizeMode="cover"
+  />
         <View style={styles.contentRow}>
         <Entypo name="megaphone" size={48} color="white" style={styles.icon}/>
         
@@ -17,7 +20,6 @@ const GetHelpHeader = () => {
           <Text style={styles.ourProfessionalsCaption}>Browse the list of our professionals</Text>
         </View>
         </View>
-        </ImageBackground>
       </View>
     </View>
   )
