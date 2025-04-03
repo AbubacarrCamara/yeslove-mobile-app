@@ -6,11 +6,14 @@ import { TOKEN_REFRESH_SERVICE } from '@/ts/token-refresh-service';
 import { useDispatch } from 'react-redux';
 import { setName, setUserId } from './store/userSlice';
 import { AuthApiFactory, ProfileApiFactory } from '@/generated-api';
+import store from './store/store';
+import { useAppDispatch } from './store/hooks';
+import { logInAction } from './store/authSlice';
 
 
 const Login = () => {
 const router = useRouter();
-const dispatch = useDispatch();
+const dispatch = useAppDispatch();
 const [password, setPassword] = useState("");
 const [username, setUsername] = useState("")
 
@@ -27,26 +30,10 @@ const handleUsernameChange = (input: React.SetStateAction<string>) => {
 }
 
 const testLogin = (username: string, password: string) => {
-  axios.defaults.baseURL = "http://localhost:5000";
-  AuthApiFactory().postLogin({password: password, username: username})
-  .then((response) => {
-    dispatch(setName(username));
-    axios.defaults.headers.common['Authorization'] = response.data.access_token ?? "";
-    TOKEN_REFRESH_SERVICE.startRefreshingToken(response.data.refresh_token ?? "");
-  })
-  .then((_) => {
-    return ProfileApiFactory().postGetUserKeycloakIdFlexible({username: username})
-  })
-  .then((response) => {
-    dispatch(setUserId(response.data.keycloak_id))
-    router.replace("/(tabs)/home");  
-  })
-  .catch((error) => {
-    console.error('Login failed:', error);
-  })
-
+  dispatch(logInAction({request: {username, password}, router: router}))
 };
 
+axios.defaults.baseURL = "http://localhost:5000";
 
   return (
     <View style={styles.container}>
