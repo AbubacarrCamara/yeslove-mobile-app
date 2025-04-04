@@ -11,10 +11,10 @@ const UserPostBox = () => {
     <View>
       <View style={styles.userPostBoxContainer}>
            <View style={styles.decorBox}>
-              <Entypo name="open-book" size={24} color="black" />
+              <Entypo name="open-book" size={24} color="gray" />
            </View>
            <View style={styles.userPostBox}>
-              <TextInput placeholder="Share what you're thinking..." placeholderTextColor="gray"></TextInput>
+              <TextInput style={styles.postInput} multiline={true} placeholder="Share what you're thinking..." placeholderTextColor="gray"></TextInput>
            </View>
            <View style={styles.postIcons}>
               <FontAwesome name="picture-o" size={24} color="black" />

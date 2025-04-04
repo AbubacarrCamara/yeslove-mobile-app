@@ -90,10 +90,15 @@ const styles = StyleSheet.create({
         padding: 10,
         width: "100%",
         height: 100,
-        borderWidth: 1,
-        borderColor: "#ddd",
         paddingHorizontal: 10,
         marginBottom: 15
+    },
+
+    postInput: {
+      minHeight: 90,
+      maxHeight: 150,
+      outlineColor: "#fff",
+      padding: 7
     },
 
     /*User post box button*/
@@ -176,7 +181,7 @@ const styles = StyleSheet.create({
     
       /* */
 
-  allUpdatesContainer: {
+  postContainer: {
     marginTop: 20,
     width: 380,
     backgroundColor: "#fff",
@@ -226,7 +231,87 @@ const styles = StyleSheet.create({
 
   timePosted: {
     color: "#888"
-  }
+  },
+
+    seeLessAndLikeContainer: {
+      display: "flex",
+      justifyContent: "space-between",
+      flexDirection: "row",
+      alignItems: "center",
+      width: "100%", 
+    },
+    
+    likeButtonContainer: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      flex: 1, 
+      marginTop: 15
+    },
+    
+    likeIcon: {
+      marginRight: 5,
+    },
+
+    commentIcon: {
+      marginLeft: 15,
+      marginRight: 5,
+    },
+
+    /* comment section */
+
+    commentContainer: {
+      width: "100%",
+      height: 90,
+      display: "flex",
+      justifyContent: "center",
+      flexDirection: "column",
+      alignItems: "center",
+      paddingVertical: 10
+    },
+
+    postCommentContainer: {
+      width: "100%",
+      height: 100,
+      display: "flex",
+      justifyContent: "center",
+      flexDirection: "row",
+      alignItems: "center",
+    },
+
+    commentBox: {
+      width: "70%",
+      height: 35,
+      borderWidth: 2,
+      borderColor: "#ccc",
+      outlineColor: "#ccc"
+    },
+
+    commentProfileImage: {
+      width: 45,
+      height: 45,
+      borderRadius: 60, 
+      borderWidth: 1,
+      borderColor: "#ccc",
+      marginRight: 10
+    },
+
+    submitCommentButton: {
+      width: 80,
+      height: 35,
+      backgroundColor: "#2d5be3",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 5,
+      opacity: 0.95,
+      marginLeft: 10,
+    },
+
+    submitCommentButtonText: {
+            color: "#fff"
+    }
+    
 
 })
 
