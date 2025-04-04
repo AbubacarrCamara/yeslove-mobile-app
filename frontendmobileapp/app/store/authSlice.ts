@@ -9,7 +9,7 @@ const authSlice = createSlice({
         setLoggedInAction: (state, action: PayloadAction<boolean>) => {
             state.loggedIn = action.payload; 
         },
-        logInAction: (state, action: PayloadAction<{request: LoginRequest, router: Router}>) => {}
+        logInAction: (state, action: PayloadAction<LoginRequest>) => {}
     },
 })
 

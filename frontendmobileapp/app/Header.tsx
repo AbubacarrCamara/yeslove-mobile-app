@@ -4,11 +4,10 @@ import { useRouter } from "expo-router";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 
 export default function Header() {
-  const router = useRouter()
   return (
     <View style={styles.header}>
       <Text style={styles.title}>Yeslove!</Text>
-      <FontAwesome5 onClick={() => router.replace("/(tabs)/profile")} style={styles.profile} size={24} name="user-alt" />
+      <FontAwesome5 onClick={() => {throw Error("Not Implemented")}} style={styles.profile} size={24} name="user-alt" />
     </View>
   );
 }
