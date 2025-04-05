@@ -3,7 +3,7 @@ import { persistUserInfoAction } from "./profileSlice";
 import { State } from "./store";
 import { AuthApiFactory, LoginRequest, ProfileApiFactory, TokenResponse, UserProfile, UserQueryResponse } from "@/generated-api";
 import { appSelect } from "./hooks";
-import { attemptRefreshFromLocalStorageAction, logInAction, setLoggedInAction } from "./authSlice";
+import { attemptRefreshFromLocalStorageAction, logInAction, LoginState, setLoginStateAction } from "./authSlice";
 import axios, { AxiosResponse } from "axios";
 import { TOKEN_REFRESH_SERVICE } from "@/ts/token-service";
 import { setUserId } from "./userSlice";
@@ -26,10 +26,10 @@ function* handleLoginRequest(action: PayloadAction<LoginRequest>) {
     axios.defaults.headers.common['Authorization'] = loginResponse.access_token ?? "";
     TOKEN_REFRESH_SERVICE.startRefreshingToken(loginResponse.refresh_token ?? "");
     TOKEN_REFRESH_SERVICE.saveRefreshTokenToLocalStorage(loginResponse.refresh_token ?? "");
-    const userQueryResponse: UserQueryResponse  = ((yield call(ProfileApiFactory().postGetUserKeycloakIdFlexible, request)) as AxiosResponse<UserQueryResponse>).data as UserQueryResponse;
+    const userQueryResponse: UserQueryResponse  = ((yield call(ProfileApiFactory().postGetUserKeycloakIdFlexible, {username: request.username})) as AxiosResponse<UserQueryResponse>).data as UserQueryResponse;
     TOKEN_REFRESH_SERVICE.saveUserIdToLocalStorage(userQueryResponse.keycloak_id ?? "")
     yield put(setUserId(userQueryResponse.keycloak_id));
-    yield put(setLoggedInAction(true));
+    yield put(setLoginStateAction(LoginState.LOGGED_IN));
   }catch (error) {
     console.error('Login failed:', error);
   }
@@ -39,15 +39,17 @@ function* refreshFromLocalStorage(action: PayloadAction<void>){
   const refreshToken = ((yield call(TOKEN_REFRESH_SERVICE.loadRefreshTokenFromLocalStorage))) as string | null;
   if(!!refreshToken){
     try{
-      yield put(setLoggedInAction(true));
       const refreshResponse = ((yield call(AuthApiFactory().postRefreshToken, {refresh_token: refreshToken})) as AxiosResponse<TokenResponse>).data as TokenResponse;
       axios.defaults.headers.common['Authorization'] = refreshResponse.access_token ?? "";
       TOKEN_REFRESH_SERVICE.startRefreshingToken(refreshResponse.refresh_token ?? "");
       TOKEN_REFRESH_SERVICE.saveRefreshTokenToLocalStorage(refreshResponse.refresh_token ?? "");
       yield put(setUserId(((yield call(TOKEN_REFRESH_SERVICE.loadUserIdFromLocalStorage))) as string | null));
+      yield put(setLoginStateAction(LoginState.LOGGED_IN));
     }catch (error){
-      yield put(setLoggedInAction(false));
+      yield put(setLoginStateAction(LoginState.LOGGED_OUT));
     }
+  }else {
+    yield put(setLoginStateAction(LoginState.LOGGED_OUT));
   }
 }
 

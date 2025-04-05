@@ -8,7 +8,11 @@ import HomeScreen from "./tabs/home";
 import GetHelpPage from "./tabs/gethelp";
 import LoginScreen from "./login-screen/LoginScreen";
 import { useFocusEffect } from "expo-router";
-import { attemptRefreshFromLocalStorageAction } from "./store/authSlice";
+import {
+  attemptRefreshFromLocalStorageAction,
+  LoginState,
+} from "./store/authSlice";
+import LoginLoadingScreen from "./login-screen/LoginLoadingScreen";
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -20,15 +24,20 @@ const App = () => {
   const currentActiveTab = useAppSelector(
     (state) => state.navigation.currentTab
   );
-  const loggedIn = useAppSelector((state) => state.auth.loggedIn);
+  const loginState = useAppSelector((state) => state.auth.loginState);
   return (
     <>
-      {!loggedIn && (
+      {loginState == LoginState.LOADING && (
+        <View style={styles.container}>
+          <LoginLoadingScreen></LoginLoadingScreen>
+        </View>
+      )}
+      {loginState == LoginState.LOGGED_OUT && (
         <View style={styles.container}>
           <LoginScreen></LoginScreen>
         </View>
       )}
-      {loggedIn && (
+      {loginState == LoginState.LOGGED_IN && (
         <View style={styles.container}>
           <Header></Header>
           {
