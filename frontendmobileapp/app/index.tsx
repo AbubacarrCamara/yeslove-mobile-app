@@ -8,7 +8,7 @@ import {
 import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import axios from "axios";
-import { TOKEN_REFRESH_SERVICE } from "@/ts/token-refresh-service";
+import { TOKEN_REFRESH_SERVICE } from "@/ts/token-service";
 import { Provider, useDispatch } from "react-redux";
 import { setName, setUserId } from "./store/userSlice";
 import { AuthApiFactory, ProfileApiFactory } from "@/generated-api";

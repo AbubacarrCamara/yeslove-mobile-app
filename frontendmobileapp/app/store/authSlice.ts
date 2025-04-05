@@ -9,9 +9,10 @@ const authSlice = createSlice({
         setLoggedInAction: (state, action: PayloadAction<boolean>) => {
             state.loggedIn = action.payload; 
         },
-        logInAction: (state, action: PayloadAction<LoginRequest>) => {}
+        logInAction: (state, action: PayloadAction<LoginRequest>) => {},
+        attemptRefreshFromLocalStorageAction: (state, action: PayloadAction<void>) => {}
     },
 })
 
-export const { setLoggedInAction, logInAction } = authSlice.actions; 
+export const { setLoggedInAction, logInAction, attemptRefreshFromLocalStorageAction} = authSlice.actions; 
 export default authSlice.reducer;

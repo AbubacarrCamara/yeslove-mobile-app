@@ -25,14 +25,15 @@ const FooterButton = (props: Props) => {
 
   return (
     <TouchableOpacity onPress={handlePress}>
-        <FontAwesome6 name={props.icon}></FontAwesome6>
+        <FontAwesome6 style={[styles.icon, currentActiveTab == props.tab && styles.activeIcon]} name={props.icon}></FontAwesome6>
         <Text>{props.title}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  activeIcon: {},
+  activeIcon: {color: "blue"},
+  icon: {color: "gray"}
 });
 
 export default FooterButton;

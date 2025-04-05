@@ -2,13 +2,21 @@ import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import Footer from "./footer/Footer";
 import Header from "./Header";
-import { useAppSelector } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import ProfilePage from "./tabs/profile";
 import HomeScreen from "./tabs/home";
 import GetHelpPage from "./tabs/gethelp";
 import LoginScreen from "./login-screen/LoginScreen";
+import { useFocusEffect } from "expo-router";
+import { attemptRefreshFromLocalStorageAction } from "./store/authSlice";
 
 const App = () => {
+  const dispatch = useAppDispatch();
+  useFocusEffect(
+    React.useCallback(() => {
+      dispatch(attemptRefreshFromLocalStorageAction());
+    }, [])
+  );
   const currentActiveTab = useAppSelector(
     (state) => state.navigation.currentTab
   );
