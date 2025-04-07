@@ -11,13 +11,24 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   ourProfessionalsContainer: {
-    width: 360,
+    width: 380,
     height: 115,
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#E49114",     
   },
+
+  imageBackground: {
+    position: "absolute",  
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0, 
+    width: "100%",  
+    height: "100%", 
+},
+
   contentRow: {
     flexDirection: "row",
     alignItems: "center",
@@ -27,6 +38,9 @@ const styles = StyleSheet.create({
   textContainer: {
     justifyContent: "center",
     alignItems: "flex-start",
+    borderLeftWidth: 5,
+    borderLeftColor: "#fff",
+    paddingHorizontal: 10
   },
   ourProfessionalsText: {
     fontSize: 23,
@@ -42,7 +56,7 @@ const styles = StyleSheet.create({
   /* Search bar */
   searchBarContainer: {
     marginTop: 30,
-    width: 360,
+    width: 380,
     borderRadius: 15,
     height: 85,
     backgroundColor: "#fff",
@@ -61,7 +75,7 @@ const styles = StyleSheet.create({
   /* Professional profiles */
   professionalProfileContainer: {
     marginTop: 30,
-    width: 370,
+    width: 380,
     backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",

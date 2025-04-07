@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import styles from "../../Styles/ProfileStyles";
 import EditableField from "./EditableField";
-import { useDispatch, useSelector } from "react-redux";
-import {setProfileInformationAction, setNameAction, setEmailAction, setPhoneAction, setAddressAction, setWebsiteAction, setBioAction, setActiveAboutTabAction, persistUserInfoAction } from "../../app/store/profileSlice";
+import {setNameAction, setEmailAction, setPhoneAction, setAddressAction, setWebsiteAction, setBioAction, setActiveAboutTabAction, persistUserInfoAction } from "../../app/store/profileSlice";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { ProfileApiFactory } from '@/generated-api';
 
 
 const AboutSection = () => {
@@ -16,7 +14,6 @@ const phone = useAppSelector(state => state.profile.info.contact_info?.phone ?? 
 const address = useAppSelector(state => state.profile.info.contact_info?.address ?? "");
 const website = useAppSelector(state => state.profile.info.contact_info?.website ?? "");
 const bio = useAppSelector(state => state.profile.info.bio ?? "");
-const info = useAppSelector(state => state.profile.info);
 const activeAboutTab  = useAppSelector(state => state.profile.view.activeAboutTab);
 const dispatch = useAppDispatch();
 const aboutItems = ["View", "Edit"];

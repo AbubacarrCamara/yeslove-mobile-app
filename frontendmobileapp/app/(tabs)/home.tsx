@@ -1,49 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
-import { useRouter } from 'expo-router';
-import { setName } from "../store/userSlice"
-import { useSelector } from 'react-redux';
-import { State } from '../store/store';
-import { useAppSelector } from '../store/hooks';
+import { ScrollView } from 'react-native';
+import UserPostBox from '@/components/home-components/UserPostBox';7
+import FeedHeader from "@/components/home-components/FeedHeader";
+import styles from "../../Styles/HomeStyles"
+import HomeNavBar from '@/components/home-components/HomeNavBar';
 
 
 
 export default function HomeScreen() {
-const name = useAppSelector(state => state.user.name);
-
-
-console.log("Current name from store:", name); 
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Welcome to the Home Page {name}!</Text>
-    </View>
+    <ScrollView  contentContainerStyle={styles.contentContainer} style={styles.container}>
+      <FeedHeader />
+      <UserPostBox />
+      <HomeNavBar />
+    </ScrollView>
   );
 }
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    textAlign: "center",
-  },
-  button: {
-    backgroundColor: '#007bff',
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    borderRadius: 8,
-    marginTop: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
