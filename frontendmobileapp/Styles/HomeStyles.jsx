@@ -284,7 +284,8 @@ const styles = StyleSheet.create({
       height: 35,
       borderWidth: 2,
       borderColor: "#ccc",
-      outlineColor: "#ccc"
+      outlineColor: "#ccc",
+      borderRadius: 5,
     },
 
     commentProfileImage: {
@@ -293,7 +294,7 @@ const styles = StyleSheet.create({
       borderRadius: 60, 
       borderWidth: 1,
       borderColor: "#ccc",
-      marginRight: 10
+      marginRight: 10,
     },
 
     submitCommentButton: {
