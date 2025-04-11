@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 import profileReducer from "./profileSlice";
+import feedReducer from "./feedSlice";
 import authReducer from "./authSlice";
 import createSagaMiddleWare from "redux-saga"
 import appSaga from "./effects";
@@ -12,6 +13,7 @@ export const store = configureStore({
     reducer: { 
         user: userReducer,
         profile: profileReducer,
+        feed: feedReducer,
         navigation: navigationReducer,
         auth: authReducer
     },

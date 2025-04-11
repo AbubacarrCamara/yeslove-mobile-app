@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', 
   },
   title: {
-    color: '#007bff',
+    color: '#2d5be3',
     fontSize: 20,
     fontWeight: 'bold',
   },

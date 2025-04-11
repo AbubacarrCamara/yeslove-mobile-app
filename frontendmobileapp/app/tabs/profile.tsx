@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import { ScrollView } from 'react-native';
+import styles from "../../Styles/ProfileStyles";
 
 /*components */
 import ProfileHeader from "../../components/profile-components/ProfileHeader";
 import ProfileNavBar from "../../components/profile-components/ProfileNavBar";
 import ProfileContent from "../../components/profile-components/ProfileContent";
-import styles from "../../Styles/ProfileStyles";
 
 
 
