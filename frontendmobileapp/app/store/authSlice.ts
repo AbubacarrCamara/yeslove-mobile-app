@@ -2,16 +2,23 @@ import { LoginRequest } from "@/generated-api";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Router } from "expo-router";
 
+export enum LoginState{
+    LOADING = "LOADING",
+    LOGGED_IN = "LOGGED_IN",
+    LOGGED_OUT = "LOGGED_OUT"
+}
+
 const authSlice = createSlice({
     name: "auth",
-    initialState: { loggedIn: false}, //defines initial state
+    initialState: { loginState: LoginState.LOADING}, //defines initial state
     reducers: {
-        setLoggedInAction: (state, action: PayloadAction<boolean>) => {
-            state.loggedIn = action.payload; 
+        setLoginStateAction: (state, action: PayloadAction<LoginState>) => {
+            state.loginState = action.payload; 
         },
-        logInAction: (state, action: PayloadAction<{request: LoginRequest, router: Router}>) => {}
+        logInAction: (state, action: PayloadAction<LoginRequest>) => {},
+        attemptRefreshFromLocalStorageAction: (state, action: PayloadAction<void>) => {}
     },
 })
 
-export const { setLoggedInAction, logInAction } = authSlice.actions; 
+export const { setLoginStateAction, logInAction, attemptRefreshFromLocalStorageAction} = authSlice.actions; 
 export default authSlice.reducer;
