@@ -40,7 +40,7 @@ class Feed(Resource):
             following.append(user.id)  # Include own posts
             posts = Post.query.filter(Post.user_id.in_(following)).order_by(Post.timestamp.desc()).all()
 
-        return [{
+        return{posts: [{
             "id": post.id,
             "author": post.author.username,
             "author_pic": post.author.profile_pic,
@@ -49,7 +49,7 @@ class Feed(Resource):
             "timestamp": post.timestamp.isoformat(),
             "likes": len(post.likes),
             "comments": len(post.comments)
-        } for post in posts], 200
+        } for post in posts] }, 200
 
 
 
