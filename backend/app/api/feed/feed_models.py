@@ -8,6 +8,19 @@ FeedQuery = api.model("FeedQuery", {
         )
     })
 
+Post = api.model('Post', {
+    'id': fields.Integer(description='Post ID'),
+    'author': fields.String(description='Username of the author'),
+    'author_pic': fields.String(description='URL to author\'s profile picture'),
+    'content': fields.String(description='Text content of the post'),
+    'image': fields.String(description='URL to image in the post'),
+    'timestamp': fields.String(description='Timestamp of the post in ISO format'),
+    'likes': fields.Integer(description='Number of likes'),
+    'comments': fields.Integer(description='Number of comments')
+})
+
+FeedResponse = api.model('PostResponse', {'posts': fields.List(fields.Nested(Post))})
+
 CreatePostRequest= api.model("CreatePostRequest", {
         "content": fields.String(required=True, description="Content of the post"),
     })
