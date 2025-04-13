@@ -242,6 +242,74 @@ export interface LoginRequest {
 /**
  * 
  * @export
+ * @interface Post
+ */
+export interface Post {
+    /**
+     * Post ID
+     * @type {number}
+     * @memberof Post
+     */
+    'id'?: number;
+    /**
+     * Username of the author
+     * @type {string}
+     * @memberof Post
+     */
+    'author'?: string;
+    /**
+     * URL to author\'s profile picture
+     * @type {string}
+     * @memberof Post
+     */
+    'author_pic'?: string;
+    /**
+     * Text content of the post
+     * @type {string}
+     * @memberof Post
+     */
+    'content'?: string;
+    /**
+     * URL to image in the post
+     * @type {string}
+     * @memberof Post
+     */
+    'image'?: string;
+    /**
+     * Timestamp of the post in ISO format
+     * @type {string}
+     * @memberof Post
+     */
+    'timestamp'?: string;
+    /**
+     * Number of likes
+     * @type {number}
+     * @memberof Post
+     */
+    'likes'?: number;
+    /**
+     * Number of comments
+     * @type {number}
+     * @memberof Post
+     */
+    'comments'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface PostResponse
+ */
+export interface PostResponse {
+    /**
+     * 
+     * @type {Array<Post>}
+     * @memberof PostResponse
+     */
+    'posts'?: Array<Post>;
+}
+/**
+ * 
+ * @export
  * @interface ProfileVisibilitySettings
  */
 export interface ProfileVisibilitySettings {
@@ -1639,7 +1707,7 @@ export const FeedApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getFeed(payload: FeedQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getFeed(payload: FeedQuery, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PostResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getFeed(payload, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['FeedApi.getFeed']?.[localVarOperationServerIndex]?.url;
@@ -1772,7 +1840,7 @@ export const FeedApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getFeed(payload: FeedQuery, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getFeed(payload: FeedQuery, options?: RawAxiosRequestConfig): AxiosPromise<PostResponse> {
             return localVarFp.getFeed(payload, options).then((request) => request(axios, basePath));
         },
         /**

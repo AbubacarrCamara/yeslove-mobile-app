@@ -11,9 +11,10 @@ api = Namespace("feed", description="API Endpoints")
 
 @api.route("/feed")
 class Feed(Resource):
-    from .feed_models import FeedQuery
+    from .feed_models import FeedQuery, FeedResponse
     @require_auth()
     @api.expect(FeedQuery)  # ✅ Attach model
+    @api.response(200, model=FeedResponse, description="")
     def get(self):
         """Fetch posts based on selected feed type (All Updates, Mentions, Favorites, Friends, Groups)."""
         from app.models import User, Post, Like

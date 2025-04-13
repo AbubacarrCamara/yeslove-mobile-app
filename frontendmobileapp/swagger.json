@@ -250,7 +250,10 @@
             "get": {
                 "responses": {
                     "200": {
-                        "description": "Success"
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/PostResponse"
+                        }
                     }
                 },
                 "summary": "Fetch posts based on selected feed type (All Updates, Mentions, Favorites, Friends, Groups)",
@@ -535,18 +538,6 @@
             }
         },
         "/api/profile/email_notifications": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    }
-                },
-                "summary": "Get email notification settings",
-                "operationId": "get_email_notifications",
-                "tags": [
-                    "profile"
-                ]
-            },
             "post": {
                 "responses": {
                     "200": {
@@ -565,6 +556,18 @@
                         }
                     }
                 ],
+                "tags": [
+                    "profile"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "Get email notification settings",
+                "operationId": "get_email_notifications",
                 "tags": [
                     "profile"
                 ]
@@ -596,18 +599,6 @@
             }
         },
         "/api/profile/profile_visibility": {
-            "get": {
-                "responses": {
-                    "200": {
-                        "description": "Success"
-                    }
-                },
-                "summary": "Get profile visibility settings",
-                "operationId": "get_profile_visibility",
-                "tags": [
-                    "profile"
-                ]
-            },
             "post": {
                 "responses": {
                     "200": {
@@ -626,6 +617,18 @@
                         }
                     }
                 ],
+                "tags": [
+                    "profile"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "summary": "Get profile visibility settings",
+                "operationId": "get_profile_visibility",
                 "tags": [
                     "profile"
                 ]
@@ -994,6 +997,54 @@
                 "feed_type": {
                     "type": "string",
                     "description": "Type of feed: 'all', 'mentions', 'favorites', 'friends', 'groups'"
+                }
+            },
+            "type": "object"
+        },
+        "PostResponse": {
+            "properties": {
+                "posts": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Post"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "Post": {
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "Post ID"
+                },
+                "author": {
+                    "type": "string",
+                    "description": "Username of the author"
+                },
+                "author_pic": {
+                    "type": "string",
+                    "description": "URL to author's profile picture"
+                },
+                "content": {
+                    "type": "string",
+                    "description": "Text content of the post"
+                },
+                "image": {
+                    "type": "string",
+                    "description": "URL to image in the post"
+                },
+                "timestamp": {
+                    "type": "string",
+                    "description": "Timestamp of the post in ISO format"
+                },
+                "likes": {
+                    "type": "integer",
+                    "description": "Number of likes"
+                },
+                "comments": {
+                    "type": "integer",
+                    "description": "Number of comments"
                 }
             },
             "type": "object"
