@@ -5,9 +5,13 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import PostCommentField from './PostCommentField';
 
+
 const Post = ({ name, timePosted, image, content, numberOfLikes, numberOfComments }) => {
     const [expanded, setExpanded] = useState(false);
     const [commentSectionExpanded, setCommentSectionExpanded] = useState(false)
+
+    const CHAR_LIMIT = 200;
+    const isLongText = content.length > CHAR_LIMIT
 
     const handleToggle = () => {
         setExpanded(!expanded);
@@ -27,7 +31,7 @@ const Post = ({ name, timePosted, image, content, numberOfLikes, numberOfComment
                 </View>
             </View>
             <Text style={styles.postContent}>
-                {expanded ? content : `${content.substring(0, 300)}...`}
+            {expanded || !isLongText ? content : `${content.substring(0, CHAR_LIMIT)}...`}
             </Text>
 
             <View style={styles.seeLessAndLikeContainer}>
@@ -37,11 +41,13 @@ const Post = ({ name, timePosted, image, content, numberOfLikes, numberOfComment
                     <FontAwesome6 onPress={handleCommentToggle} style={styles.commentIcon} name="comment-dots" size={24} color="gray" />
                     <Text>{numberOfComments}</Text>
                 </View>
-                <TouchableOpacity onPress={handleToggle}>
-                    <Text style={{ color: '#2d5be3', marginTop: 10 }}>
-                        {expanded ? 'See Less' : 'See More'}
-                    </Text>
-                </TouchableOpacity>
+                {isLongText && (
+                    <TouchableOpacity onPress={handleToggle}>
+                        <Text style={{ color: '#2d5be3', marginTop: 10 }}>
+                            {expanded ? 'See Less' : 'See More'}
+                        </Text>
+                    </TouchableOpacity>
+                )}
             </View>
 
 
