@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
-import styles from '../../Styles/GetHelpStyles'; 
+import styles from '../../Styles/page-styles/GetHelpStyles'; 
+import theme from "../../Styles/Variables"
 
 const GetHelpProfessionals = () => {
   const [expanded, setExpanded] = useState(null); 
@@ -37,7 +38,7 @@ const GetHelpProfessionals = () => {
             {expanded === index ? professional.description : `${professional.description.substring(0, 300)}...`}
           </Text>
           <TouchableOpacity onPress={() => handleToggle(index)}>
-            <Text style={{ color: '#2d5be3', marginTop: 10 }}>
+            <Text style={{ color: theme.colors.primaryBlue , marginTop: 10 }}>
               {expanded === index ? 'See Less' : 'See More'}
             </Text>
           </TouchableOpacity>

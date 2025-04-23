@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, TouchableOpacity, TextInput, Text, Image } from "react-native";
-import styles from '../../Styles/HomeStyles';
+import styles from '../../Styles/page-styles/HomeStyles';
 
 const PostCommentField = ( { image }) => {
   return (

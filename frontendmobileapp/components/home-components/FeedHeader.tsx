@@ -1,6 +1,6 @@
 import React from 'react'
 import { ImageBackground, View, Text } from "react-native"
-import styles from "../../Styles/HomeStyles";
+import styles from "../../Styles/page-styles/HomeStyles";
 import Entypo from '@expo/vector-icons/Entypo';
 
 const FeedHeader = () => {

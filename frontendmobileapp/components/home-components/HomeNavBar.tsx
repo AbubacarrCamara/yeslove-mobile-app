@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity, Text } from "react-native";
-import styles from "../../Styles/HomeStyles";
+import styles from "../../Styles/page-styles/HomeStyles";
 import AllUpdatesPosts from './AllUpdatesPosts';
 import FriendsPosts from './FriendsPosts';
 import { FeedTabs, setActiveHomeTabAction } from "../../app/store/feedSlice";

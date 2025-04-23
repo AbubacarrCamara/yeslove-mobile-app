@@ -19,3 +19,5 @@ const navigationSlice = createSlice({
 
 export const { changeTabAction } = navigationSlice.actions; 
 export const navigationReducer = navigationSlice.reducer;
+
+export default navigationSlice.reducer

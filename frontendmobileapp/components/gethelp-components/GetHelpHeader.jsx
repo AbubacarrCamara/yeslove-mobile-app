@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
-import styles from "../../Styles/GetHelpStyles";
+import styles from "../../Styles/page-styles/GetHelpStyles";
 import Entypo from '@expo/vector-icons/Entypo';
 
 const GetHelpHeader = () => {
