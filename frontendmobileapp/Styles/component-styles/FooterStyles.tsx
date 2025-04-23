@@ -8,16 +8,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff', 
         flexDirection: 'row', 
         alignItems: 'center', 
-        paddingLeft: 20, 
-        paddingTop: 5,
         marginTop: 0,
+        padding: 15,
         justifyContent: 'space-between', 
       },
       activeIcon: {
         color: theme.colors.primaryBlue
     },
   icon: {
-    color: theme.colors.iconNotActive
+    color: theme.colors.iconNotActive,
+    fontSize: 20,
+    display: "flex",
+    paddingBottom: 3,
+    justifyContent: "center",
+    alignItems: "center"
 }
 })
 
