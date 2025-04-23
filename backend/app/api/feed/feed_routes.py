@@ -9,66 +9,60 @@ from app.utils import require_auth
 
 api = Namespace("feed", description="API Endpoints")
 
-# 🔹 Add pagination query parameters
-feed_parser = reqparse.RequestParser()
-feed_parser.add_argument("feed_type", type=str, default="all", help="Feed filter type")
-feed_parser.add_argument("page", type=int, default=1, help="Page number")
-feed_parser.add_argument("per_page", type=int, default=10, help="Number of posts per page")
-
 @api.route("/feed")
 class Feed(Resource):
+    from .feed_models import FeedQuery
     @require_auth()
-    @api.expect(feed_parser)
+    @api.expect(FeedQuery)
     def get(self):
-        """Fetch paginated posts based on selected feed type (All Updates, Mentions, Favorites, Friends, Groups)."""
+        """Fetch posts based on selected feed type (All Updates, Mentions, Favorites, Friends, Groups) with pagination."""
         from app.models import User, Post, Like
         user = User.query.filter_by(keycloak_id=request.user["keycloak_id"]).first()
         if not user:
             return {"message": "User not found"}, 404
 
-        args = feed_parser.parse_args()
-        feed_type = args.get("feed_type", "all")
-        page = args.get("page", 1)
-        per_page = args.get("per_page", 10)
+        feed_type = request.args.get("feed_type", "all")
+        page = int(request.args.get("page", 1))
+        per_page = int(request.args.get("per_page", 10))
 
-        query = Post.query
-
+        # Build query based on feed type
         if feed_type == "mentions":
-            query = query.filter(Post.content.contains(f"@{user.username}"))
+            query = Post.query.filter(Post.content.contains(f"@{user.username}")).order_by(Post.timestamp.desc())
         elif feed_type == "favorites":
-            query = query.join(Like).filter(Like.user_id == user.id)
+            query = Post.query.join(Like).filter(Like.user_id == user.id).order_by(Post.timestamp.desc())
         elif feed_type == "friends":
             friend_ids = [follow.followed_id for follow in user.following]
-            query = query.filter(Post.user_id.in_(friend_ids))
+            query = Post.query.filter(Post.user_id.in_(friend_ids)).order_by(Post.timestamp.desc())
         elif feed_type == "groups":
-            query = query.filter(False)  # Placeholder for future group logic
+            query = Post.query.filter_by(user_id=None)  # TODO: Replace with group logic
         else:  # "all"
             following = [follow.followed_id for follow in user.following]
             following.append(user.id)
-            query = query.filter(Post.user_id.in_(following))
+            query = Post.query.filter(Post.user_id.in_(following)).order_by(Post.timestamp.desc())
 
-        # ✅ Apply ordering and pagination
-        paginated = query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=per_page, error_out=False)
-
-        posts = [{
-            "id": post.id,
-            "author": post.author.username,
-            "author_pic": post.author.profile_pic,
-            "content": post.content,
-            "image": post.image,
-            "timestamp": post.timestamp.isoformat(),
-            "likes": len(post.likes),
-            "comments": len(post.comments)
-        } for post in paginated.items]
+        paginated_posts = query.paginate(page=page, per_page=per_page, error_out=False)
+        posts = paginated_posts.items
 
         return {
-            "posts": posts,
-            "page": paginated.page,
-            "per_page": paginated.per_page,
-            "total_posts": paginated.total,
-            "total_pages": paginated.pages
+            "posts": [{
+                "id": post.id,
+                "author": post.author.username,
+                "author_pic": post.author.profile_pic,
+                "content": post.content,
+                "image": post.image,
+                "timestamp": post.timestamp.isoformat(),
+                "likes": len(post.likes),
+                "comments": len(post.comments)
+            } for post in posts],
+            "pagination": {
+                "page": paginated_posts.page,
+                "per_page": paginated_posts.per_page,
+                "total_posts": paginated_posts.total,
+                "total_pages": paginated_posts.pages,
+                "has_next": paginated_posts.has_next,
+                "has_prev": paginated_posts.has_prev
+            }
         }, 200
-
 
 
 
