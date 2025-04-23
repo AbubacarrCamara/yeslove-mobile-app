@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
-import styles from '../../Styles/HomeStyles';
+import styles from '../../Styles/page-styles/HomeStyles';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import PostCommentField from './PostCommentField';

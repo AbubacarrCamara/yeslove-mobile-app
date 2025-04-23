@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Text, View, Image, TouchableOpacity } from 'react-native';
-import styles from "../../Styles/ProfileStyles";
+import styles from "../../Styles/page-styles/ProfileStyles";
 import EditableField from "./EditableField";
 import {setNameAction, setEmailAction, setPhoneAction, setAddressAction, setWebsiteAction, setBioAction, setActiveAboutTabAction, persistUserInfoAction } from "../../app/store/profileSlice";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';

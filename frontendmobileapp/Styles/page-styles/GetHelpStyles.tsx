@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import theme from "../Variables"
 
 const styles = StyleSheet.create({
   container: {
@@ -11,12 +12,12 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   ourProfessionalsContainer: {
-    width: 380,
+    width: theme.spacing.postWidth,
     height: 115,
     borderRadius: 15,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#E49114",     
+    backgroundColor: theme.colors.bannerOrange,     
   },
 
   imageBackground: {
@@ -44,19 +45,19 @@ const styles = StyleSheet.create({
   },
   ourProfessionalsText: {
     fontSize: 23,
-    color: "#fff",
+    color: theme.colors.bannerTextColor,
     fontWeight: "bold",   
   },
   ourProfessionalsCaption: {
     fontSize: 15,
-    color: "#fff",
+    color: theme.colors.bannerTextColor,
     fontWeight: "600", 
   },
 
   /* Search bar */
   searchBarContainer: {
     marginTop: 30,
-    width: 380,
+    width: theme.spacing.postWidth,
     borderRadius: 15,
     height: 85,
     backgroundColor: "#fff",

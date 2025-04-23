@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollView, ImageBackground, StyleSheet, Platform, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
-import styles from "../../Styles/ProfileStyles";
+import styles from "../../Styles/page-styles/ProfileStyles";
 import AboutSection from "./AboutSection"
 import { useAppSelector } from '@/app/store/hooks';
 

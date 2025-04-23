@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { View, TextInput, TouchableOpacity, Text } from "react-native";
-import styles from "../../Styles/HomeStyles";
+import styles from "../../Styles/page-styles/HomeStyles";
 import Entypo from '@expo/vector-icons/Entypo';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AntDesign from '@expo/vector-icons/AntDesign';
