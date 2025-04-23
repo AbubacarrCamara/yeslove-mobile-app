@@ -1,5 +1,5 @@
 from flask import request
-from flask_restx import Namespace, Resource
+from flask_restx import Namespace, Resource, reqparse
 
 from app.logging_setup import logger
 
@@ -9,38 +9,48 @@ from app.utils import require_auth
 
 api = Namespace("feed", description="API Endpoints")
 
+# 🔹 Add pagination query parameters
+feed_parser = reqparse.RequestParser()
+feed_parser.add_argument("feed_type", type=str, default="all", help="Feed filter type")
+feed_parser.add_argument("page", type=int, default=1, help="Page number")
+feed_parser.add_argument("per_page", type=int, default=10, help="Number of posts per page")
+
 @api.route("/feed")
 class Feed(Resource):
-    from .feed_models import FeedQuery, FeedResponse
     @require_auth()
-    @api.expect(FeedQuery)  # ✅ Attach model
-    @api.response(200, model=FeedResponse, description="")
+    @api.expect(feed_parser)
     def get(self):
-        """Fetch posts based on selected feed type (All Updates, Mentions, Favorites, Friends, Groups)."""
+        """Fetch paginated posts based on selected feed type (All Updates, Mentions, Favorites, Friends, Groups)."""
         from app.models import User, Post, Like
-        user = User.query.filter_by(keycloak_id=request.user["keycloak_id"]).first()  # ✅ Use Keycloak UUID
+        user = User.query.filter_by(keycloak_id=request.user["keycloak_id"]).first()
         if not user:
             return {"message": "User not found"}, 404
 
-        feed_type = request.args.get("feed_type", "all")  # ✅ Default to "all"
+        args = feed_parser.parse_args()
+        feed_type = args.get("feed_type", "all")
+        page = args.get("page", 1)
+        per_page = args.get("per_page", 10)
 
-        # ✅ Fetch different types of posts based on the selected feed
+        query = Post.query
+
         if feed_type == "mentions":
-            posts = Post.query.filter(Post.content.contains(f"@{user.username}")).order_by(Post.timestamp.desc()).all()
+            query = query.filter(Post.content.contains(f"@{user.username}"))
         elif feed_type == "favorites":
-            posts = Post.query.join(Like).filter(Like.user_id == user.id).order_by(Post.timestamp.desc()).all()
+            query = query.join(Like).filter(Like.user_id == user.id)
         elif feed_type == "friends":
             friend_ids = [follow.followed_id for follow in user.following]
-            posts = Post.query.filter(Post.user_id.in_(friend_ids)).order_by(Post.timestamp.desc()).all()
+            query = query.filter(Post.user_id.in_(friend_ids))
         elif feed_type == "groups":
-            # 🔹 Future: Implement group post filtering
-            posts = []
+            query = query.filter(False)  # Placeholder for future group logic
         else:  # "all"
             following = [follow.followed_id for follow in user.following]
-            following.append(user.id)  # Include own posts
-            posts = Post.query.filter(Post.user_id.in_(following)).order_by(Post.timestamp.desc()).all()
+            following.append(user.id)
+            query = query.filter(Post.user_id.in_(following))
 
-        return{"posts": [{
+        # ✅ Apply ordering and pagination
+        paginated = query.order_by(Post.timestamp.desc()).paginate(page=page, per_page=per_page, error_out=False)
+
+        posts = [{
             "id": post.id,
             "author": post.author.username,
             "author_pic": post.author.profile_pic,
@@ -49,7 +59,16 @@ class Feed(Resource):
             "timestamp": post.timestamp.isoformat(),
             "likes": len(post.likes),
             "comments": len(post.comments)
-        } for post in posts] }, 200
+        } for post in paginated.items]
+
+        return {
+            "posts": posts,
+            "page": paginated.page,
+            "per_page": paginated.per_page,
+            "total_posts": paginated.total,
+            "total_pages": paginated.pages
+        }, 200
+
 
 
 
