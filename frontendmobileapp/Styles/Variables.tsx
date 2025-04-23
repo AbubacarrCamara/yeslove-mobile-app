@@ -1,3 +1,5 @@
+import { vw } from "../ts/viewport-units"
+
 const theme = {
     colors: {
         /*main shade of blue used across the app including active nav headings and footer icons */
@@ -13,7 +15,7 @@ const theme = {
     },
     spacing: {
         /*width of posts, postbox, banner, and most component parent elements*/
-        postWidth: 380
+        postWidth: vw(90)
     }
 }
 

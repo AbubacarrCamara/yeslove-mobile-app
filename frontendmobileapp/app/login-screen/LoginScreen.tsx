@@ -5,12 +5,11 @@ import { logInAction } from '../store/authSlice';
 import { useAppDispatch } from '../store/hooks';
 import styles from "../../Styles/page-styles/LoginStyles";
 
-
 const LoginScreen = () => {
 const dispatch = useAppDispatch();
 const [password, setPassword] = useState("");
 const [username, setUsername] = useState("");
-const image = { uri: "https://images.unsplash.com/photo-1524865291454-215bdc75819e?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }
+const image = { uri: "https://images.unsplash.com/vector-1741103791953-12eca7b8e3c7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTAwfHxibHVlJTIwYWJzdHJhY3QlMjBzaGFwZXMlMjB3aGl0ZSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D" }
 
 const handleLogin = () => {
   testLogin(username, password)
@@ -31,9 +30,9 @@ const testLogin = (username: string, password: string) => {
 axios.defaults.baseURL = "http://localhost:5000";
 
   return (
-    <ImageBackground source={image} style={styles.container} resizeMode="cover" imageStyle={{ opacity: 0.7 }}>
+    <ImageBackground source={image} style={styles.container} resizeMode="cover" imageStyle={{ opacity: 1, height: "110%" }}>
       <View style={styles.innerContainer}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>LOGIN</Text>
 
       <Text style={styles.label}>Username</Text>
       <TextInput onChangeText={handleUsernameChange} value={username} style={styles.input} placeholder="Enter username" />
@@ -42,7 +41,7 @@ axios.defaults.baseURL = "http://localhost:5000";
       <TextInput onChangeText={handlePasswordChange} value={password} style={styles.input} placeholder="Enter password" secureTextEntry={true} />
     
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>LOGIN</Text>
       </TouchableOpacity>
       </View>
     </ImageBackground>
