@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import FooterButton from './FooterButton';
+import FooterButton from '../../components/footer-components/FooterButton';
 import { Tab } from '../store/navigationSlice';
 import styles from "../../Styles/component-styles/FooterStyles"
 
