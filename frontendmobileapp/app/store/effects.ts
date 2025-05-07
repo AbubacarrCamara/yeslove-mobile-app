@@ -1,7 +1,7 @@
 import { call, put, putResolve, takeEvery } from "redux-saga/effects";
 import { persistUserInfoAction } from "./profileSlice";
 import { State } from "./store";
-import { AuthApiFactory, LoginRequest, ProfileApiFactory, TokenResponse, UserProfile, UserQueryResponse } from "@/generated-api";
+import { AuthApiFactory, FeedApiFactory, LoginRequest, PostResponse, ProfileApiFactory, TokenResponse, UserProfile, UserQueryResponse } from "@/generated-api";
 import { appSelect } from "./hooks";
 import { attemptRefreshFromLocalStorageAction, logInAction, LoginState, setLoginStateAction } from "./authSlice";
 import axios, { AxiosResponse } from "axios";
@@ -9,6 +9,7 @@ import { TOKEN_REFRESH_SERVICE } from "@/ts/token-service";
 import { setUserId } from "./userSlice";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { Router } from "expo-router";
+import { postNewPostAction, setFeedDataAction, updatePostsForFeedAction } from "./feedSlice";
 
 // worker Saga: will be fired on USER_FETCH_REQUESTED actions
 function* saveProfileInfoEffect(action: any) {
@@ -53,11 +54,23 @@ function* refreshFromLocalStorage(action: PayloadAction<void>){
   }
 }
 
+function* updateFeed(action: PayloadAction<string>){
+  const posts = ((yield call(FeedApiFactory().getFeed, {feed_type: action.payload})) as AxiosResponse<PostResponse>).data as PostResponse;
+  yield put(setFeedDataAction(posts.posts ?? []));
+}
+
+function* postNewPost(action: PayloadAction<{content: string}>){
+  yield call(FeedApiFactory().postCreatePost, {content: action.payload.content});
+  yield put(updatePostsForFeedAction('all'));
+}
+
 
 function* appSaga() {
   yield takeEvery(persistUserInfoAction.type, saveProfileInfoEffect);
   yield takeEvery(logInAction.type, handleLoginRequest);
   yield takeEvery(attemptRefreshFromLocalStorageAction.type, refreshFromLocalStorage);
+  yield takeEvery(updatePostsForFeedAction.type, updateFeed);
+  yield takeEvery(postNewPostAction.type, postNewPost);
 }
 
 export default appSaga;

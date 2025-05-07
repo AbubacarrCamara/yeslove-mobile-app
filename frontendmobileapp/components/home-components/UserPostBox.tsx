@@ -7,7 +7,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks'
 import { FeedApiFactory } from '@/generated-api';
-import { setFeedDataAction } from '@/app/store/feedSlice';
+import { postNewPostAction, setFeedDataAction } from '@/app/store/feedSlice';
 
 const UserPostBox = () => {
 const dispatch = useAppDispatch()
@@ -18,11 +18,7 @@ const handleUserPost = (input: React.SetStateAction<string>) => {
 }
 
 const handleUserPostButton = () => {
-   FeedApiFactory().postCreatePost({content: userPost})
-   .then(() => FeedApiFactory().getFeed({feed_type: "all"}))
-   .then(response => {
-      dispatch(setFeedDataAction(response.data.posts ?? []))
-   }).then(() => setUserPost(""))
+   dispatch(postNewPostAction({content: userPost}));
 }
 
   return (

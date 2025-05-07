@@ -16,10 +16,12 @@ const feedSlice = createSlice({
         },
         setFeedDataAction: (state, action: PayloadAction<Post[]>) => {
             state.feed.posts = action.payload
-        }
+        },
+        updatePostsForFeedAction: (state, action: PayloadAction<string>) => {},
+        postNewPostAction: (state, action: PayloadAction<{content: string}>) => {}
     },
 });
 
 
-export const { setActiveHomeTabAction, setFeedDataAction } = feedSlice.actions;
+export const { setActiveHomeTabAction, setFeedDataAction, updatePostsForFeedAction, postNewPostAction } = feedSlice.actions;
 export default feedSlice.reducer;
