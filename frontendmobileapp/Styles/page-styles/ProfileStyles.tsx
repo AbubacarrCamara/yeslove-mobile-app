@@ -1,6 +1,6 @@
 
-import { vw } from '@/ts/viewport-units';
 import { StyleSheet } from 'react-native';
+import theme from "../Variables"
 
 
 const styles = StyleSheet.create({
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   profileBackgroundImage: {
-    width: vw(90),
+    width: theme.spacing.postWidth,
     height: 340,
     display: "flex",
     justifyContent: "center",
@@ -99,7 +99,7 @@ navBarContainer: {
 navBar: {
   flexDirection: "row",
   flexWrap: "wrap", 
-  width: vw(90), 
+  width: theme.spacing.postWidth, 
   justifyContent: "center",
   backgroundColor: "#fff",
   paddingVertical: 10,
@@ -117,7 +117,7 @@ navItem: {
 },
 navText: {
   fontSize: 16,
-  color: "#666",
+  color: theme.colors.iconNotActive,
   fontWeight: "500",
 },
 activeNavItem: {
@@ -130,7 +130,7 @@ activeNavText: {
 activeIndicator: {
   width: 40,
   height: 3,
-  backgroundColor: "#2d5be3", 
+  backgroundColor: theme.colors.primaryBlue, 
   position: "absolute",
   bottom: -2, 
 },
@@ -153,7 +153,7 @@ friendsContainer: {
 friends: {
   flexDirection: "column",
   flexWrap: "wrap", 
-  width: vw(80), 
+  width: theme.spacing.postWidth - 50, 
   justifyContent: "flex-start",
   backgroundColor: "#fff",
   paddingVertical: 6,
@@ -221,7 +221,7 @@ aboutNavBarContainer: {
 aboutNavBar: {
   flexDirection: "row",
   flexWrap: "wrap", 
-  width: vw(80), 
+  width: theme.spacing.postWidth - 50, 
   justifyContent: "center",
   backgroundColor: "#fff",
   paddingVertical: 3,
@@ -254,7 +254,7 @@ viewItemContainer: {
   paddingHorizontal: 30,
   paddingVertical: 15,
   marginBottom: 20,
-  width: vw(90),
+  width: theme.spacing.postWidth,
 },
 
 viewItemText: {
@@ -267,7 +267,7 @@ viewItemText: {
 viewItemInfo: {
   borderWidth: 2,
   borderStyle: "solid",
-  borderColor: "#f1f1f1",
+  borderColor: theme.colors.viewEditBorderColor,
   width: "90%",
   paddingVertical: 5,
   paddingLeft: 10,
@@ -277,7 +277,7 @@ viewItemInfo: {
 /*About/Edit styles*/
 aboutEditContainer: {
   display: "flex",
-  width: vw(90),
+  width: theme.spacing.postWidth,
   justifyContent: "center",
   alignItems: "center",
   marginBottom: 30
@@ -290,7 +290,7 @@ editItemContainer: {
   paddingHorizontal: 30,
   paddingVertical: 15,
   marginBottom: 20,
-  width: vw(90)
+  width: theme.spacing.postWidth
 },
 
 editItemText: {
@@ -303,7 +303,7 @@ editItemText: {
 editItemInfo: {
   borderWidth: 2,
   borderStyle: "solid",
-  borderColor: "#f1f1f1",
+  borderColor: theme.colors.viewEditBorderColor,
   width: "90%",
   paddingVertical: 5,
   paddingLeft: 10
@@ -315,7 +315,7 @@ saveButton: {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "#2d5be3",
+  backgroundColor: theme.colors.primaryBlue,
   borderRadius: 10,
   marginBottom: 50
 },

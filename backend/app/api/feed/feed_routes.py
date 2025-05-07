@@ -1,5 +1,5 @@
 from flask import request
-from flask_restx import Namespace, Resource
+from flask_restx import Namespace, Resource, reqparse
 
 from app.logging_setup import logger
 
@@ -11,45 +11,58 @@ api = Namespace("feed", description="API Endpoints")
 
 @api.route("/feed")
 class Feed(Resource):
-    from .feed_models import FeedQuery, FeedResponse
+    from .feed_models import FeedQuery
     @require_auth()
-    @api.expect(FeedQuery)  # ✅ Attach model
-    @api.response(200, model=FeedResponse, description="")
+    @api.expect(FeedQuery)
     def get(self):
-        """Fetch posts based on selected feed type (All Updates, Mentions, Favorites, Friends, Groups)."""
+        """Fetch posts based on selected feed type (All Updates, Mentions, Favorites, Friends, Groups) with pagination."""
         from app.models import User, Post, Like
-        user = User.query.filter_by(keycloak_id=request.user["keycloak_id"]).first()  # ✅ Use Keycloak UUID
+        user = User.query.filter_by(keycloak_id=request.user["keycloak_id"]).first()
         if not user:
             return {"message": "User not found"}, 404
 
-        feed_type = request.args.get("feed_type", "all")  # ✅ Default to "all"
+        feed_type = request.args.get("feed_type", "all")
+        page = int(request.args.get("page", 1))
+        per_page = int(request.args.get("per_page", 10))
 
-        # ✅ Fetch different types of posts based on the selected feed
+        # Build query based on feed type
         if feed_type == "mentions":
-            posts = Post.query.filter(Post.content.contains(f"@{user.username}")).order_by(Post.timestamp.desc()).all()
+            query = Post.query.filter(Post.content.contains(f"@{user.username}")).order_by(Post.timestamp.desc())
         elif feed_type == "favorites":
-            posts = Post.query.join(Like).filter(Like.user_id == user.id).order_by(Post.timestamp.desc()).all()
+            query = Post.query.join(Like).filter(Like.user_id == user.id).order_by(Post.timestamp.desc())
         elif feed_type == "friends":
             friend_ids = [follow.followed_id for follow in user.following]
-            posts = Post.query.filter(Post.user_id.in_(friend_ids)).order_by(Post.timestamp.desc()).all()
+            query = Post.query.filter(Post.user_id.in_(friend_ids)).order_by(Post.timestamp.desc())
         elif feed_type == "groups":
-            # 🔹 Future: Implement group post filtering
-            posts = []
+            query = Post.query.filter_by(user_id=None)  # TODO: Replace with group logic
         else:  # "all"
             following = [follow.followed_id for follow in user.following]
-            following.append(user.id)  # Include own posts
-            posts = Post.query.filter(Post.user_id.in_(following)).order_by(Post.timestamp.desc()).all()
+            following.append(user.id)
+            query = Post.query.filter(Post.user_id.in_(following)).order_by(Post.timestamp.desc())
 
-        return{"posts": [{
-            "id": post.id,
-            "author": post.author.username,
-            "author_pic": post.author.profile_pic,
-            "content": post.content,
-            "image": post.image,
-            "timestamp": post.timestamp.isoformat(),
-            "likes": len(post.likes),
-            "comments": len(post.comments)
-        } for post in posts] }, 200
+        paginated_posts = query.paginate(page=page, per_page=per_page, error_out=False)
+        posts = paginated_posts.items
+
+        return {
+            "posts": [{
+                "id": post.id,
+                "author": post.author.username,
+                "author_pic": post.author.profile_pic,
+                "content": post.content,
+                "image": post.image,
+                "timestamp": post.timestamp.isoformat(),
+                "likes": len(post.likes),
+                "comments": len(post.comments)
+            } for post in posts],
+            "pagination": {
+                "page": paginated_posts.page,
+                "per_page": paginated_posts.per_page,
+                "total_posts": paginated_posts.total,
+                "total_pages": paginated_posts.pages,
+                "has_next": paginated_posts.has_next,
+                "has_prev": paginated_posts.has_prev
+            }
+        }, 200
 
 
 

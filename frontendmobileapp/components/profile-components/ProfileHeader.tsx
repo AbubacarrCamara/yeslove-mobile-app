@@ -1,6 +1,6 @@
 import React from 'react'
 import { ImageBackground, Text, View, Image } from 'react-native';
-import styles from "../../Styles/ProfileStyles";
+import styles from "../../Styles/page-styles/ProfileStyles";
 import { useFocusEffect } from "@react-navigation/native";
 import { setProfileInformationAction } from "../../app/store/profileSlice";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';

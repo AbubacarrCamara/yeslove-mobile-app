@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View, Image, TouchableOpacity } from 'react-native';
-import styles from "../../Styles/ProfileStyles";
+import styles from "../../Styles/page-styles/ProfileStyles";
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { setActiveTabAction } from '@/app/store/profileSlice';
 

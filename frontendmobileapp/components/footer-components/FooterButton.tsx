@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { changeTabAction, Tab } from "../store/navigationSlice";
-
+import {  TouchableOpacity, Text } from "react-native";
+import { useAppDispatch, useAppSelector } from "../../app/store/hooks";
+import { changeTabAction, Tab } from "../../app/store/navigationSlice";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import styles from "../../Styles/component-styles/FooterStyles"
 
 interface Props {
   tab: Tab;
@@ -31,9 +31,5 @@ const FooterButton = (props: Props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  activeIcon: {color: "blue"},
-  icon: {color: "gray"}
-});
 
 export default FooterButton;

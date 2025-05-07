@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native"
-import { vw } from "@/ts/viewport-units"
+import { StyleSheet } from "react-native";
+import theme from "../Variables"
 
 const styles = StyleSheet.create({
 
@@ -16,12 +16,12 @@ const styles = StyleSheet.create({
       },
 
     feedHeaderContainer: {
-        width: 380,
+        width: theme.spacing.postWidth,
         height: 115,
         borderRadius: 15,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#E49114",
+        backgroundColor: theme.colors.bannerOrange,
     },
 
     contentRow: {
@@ -72,13 +72,13 @@ const styles = StyleSheet.create({
         width: "100%",
         top: 0, 
         borderBottomWidth: 3,
-        borderBottomColor: "#2d5be3",
+        borderBottomColor: theme.colors.primaryBlue,
         opacity: 0.7,
     },
 
     userPostBoxContainer: {
         marginTop: 30,
-        width: 380,
+        width: theme.spacing.postWidth,
         borderRadius: 10,
         height: 265,
         backgroundColor: "#fff",
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     postButton: {
        width: 80,
        height: 30,
-       backgroundColor: "#2d5be3",
+       backgroundColor: theme.colors.primaryBlue,
        display: "flex",
        justifyContent: "center",
        alignItems: "center",
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     homeNavBar: {
       flexDirection: "row",
       flexWrap: "wrap", 
-      width: vw(90), 
+      width: theme.spacing.postWidth, 
       justifyContent: "center",
       backgroundColor: "#fff",
       paddingVertical: 3,
@@ -168,13 +168,13 @@ const styles = StyleSheet.create({
     },
     navText: {
         fontSize: 16,
-        color: "#666",
+        color: theme.colors.iconNotActive,
         fontWeight: "500",
       },
       activeIndicator: {
         width: 40,
         height: 3,
-        backgroundColor: "#2d5be3", 
+        backgroundColor: theme.colors.primaryBlue, 
         position: "absolute",
         bottom: -2, 
       },
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
 
   postContainer: {
     marginTop: 20,
-    width: 380,
+    width: theme.spacing.postWidth,
     backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
     submitCommentButton: {
       width: 80,
       height: 35,
-      backgroundColor: "#2d5be3",
+      backgroundColor: theme.colors.primaryBlue,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",

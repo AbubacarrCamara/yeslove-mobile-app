@@ -1,11 +1,8 @@
-import { Tabs } from 'expo-router';
 import React from 'react';
-import { View, StyleSheet} from 'react-native';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import FooterButton from './FooterButton';
+import { View } from 'react-native';
+import FooterButton from '../../components/footer-components/FooterButton';
 import { Tab } from '../store/navigationSlice';
-
-
+import styles from "../../Styles/component-styles/FooterStyles"
 
 
 const Footer =() => {
@@ -19,18 +16,5 @@ const Footer =() => {
   );
 }
 
-const styles = StyleSheet.create({
-  footer: {
-    width: '100%',
-    height: 60,
-    backgroundColor: '#fff', 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    paddingLeft: 20, 
-    paddingTop: 5,
-    marginTop: 0,
-    justifyContent: 'space-between', 
-  }
-});
 
 export default Footer

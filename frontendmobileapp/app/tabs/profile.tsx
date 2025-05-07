@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { ScrollView } from 'react-native';
-import styles from "../../Styles/ProfileStyles";
+import styles from "../../Styles/page-styles/ProfileStyles";
 
 /*components */
 import ProfileHeader from "../../components/profile-components/ProfileHeader";
