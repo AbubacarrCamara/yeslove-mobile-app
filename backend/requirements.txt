@@ -10,6 +10,8 @@ Flask-Bcrypt
 
 Flask-cors 
 
+Flask-restx
+
 requests 
 
 SQLAlchemy 
