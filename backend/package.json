@@ -1,0 +1,11 @@
+{
+  "name": "run.py",
+  "version": "1.0.0",
+  "description": "Ensure you have the following installed before proceeding:\r - Python 3.12+\r - Flask\r - SQLite3\r - Virtualenv\r - Postman (for testing API endpoints)\r - Keycloak (for authentication)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

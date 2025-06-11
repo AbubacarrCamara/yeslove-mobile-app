@@ -9,6 +9,7 @@ Ensure you have the following installed before proceeding:
 - Postman (for testing API endpoints)
 - Keycloak (for authentication)
 
+
 ## 🔧 Step 1: Clone the Repository
 ```bash
 git clone https://github.com/yeslovetest/yeslove-mobile-app.git
@@ -40,14 +41,43 @@ KEYCLOAK_CLIENT_ID=your-client-id
 KEYCLOAK_CLIENT_SECRET=your-client-secret
 ```
 
-## 📂 Step 5: Initialize the Database
+## 🛠 Step 5: Setup KeyCloak
+# KeyCloak has been installed into the KeyCloakService directory
+
+``` bash
+cd yeslove-mobile-app/keycloakservice/bin
+kc.bat start-dev
+
+# If first time setting up keycloak, set admin credentials as 
+set KEYCLOAK_ADMIN=admin
+set KEYCLOAK_ADMIN_PASSWORD=change_me
+```
+# Next import the Preconfigured Realm
+# Open your browser and go to:
+http://localhost:8080
+
+ Log in with the admin credentials you just set (e.g., admin / change_me)
+
+ In the admin console:
+
+ Click the Master realm dropdown → Add Realm
+
+ Click Import
+
+ Upload the file:
+yeslove-mobile-app/keycloakservice/YesLove_Auth-realm.json
+
+# Click Create
+
+
+## 📂 Step 6: Initialize the Database
 ```bash
 flask db init  # Run only if migrations folder is missing
 flask db migrate -m "Initial migration"
 flask db upgrade
 ```
 
-## 🚀 Step 6: Start the Flask Application
+## 🚀 Step 7: Start the Flask Application
 ```bash
 flask run
 ```
